@@ -12,144 +12,111 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <title>nojima 3連電卓</title>
 <style>
-:root{
-  --bg1:#d92a72; --bg2:#f46eaa; --bg3:#f9bbd5;
-  --panel:#fffafc; --panel2:#fff1f7; --line:#f1bfd3;
-  --accent:#ee3d89; --accent2:#ff7db3; --accentDark:#a91455;
-  --key:#fff7fb; --keyText:#971346; --op:#eb3a84; --dark:#3b3a47;
-  --text:#3a2430; --muted:#8f687a; --shadow:0 8px 20px rgba(87,12,50,.22);
-}
+:root{--bg1:#d92a72;--bg2:#f46eaa;--bg3:#f9bbd5;--panel:#fffafc;--line:#f1bfd3;--accent:#ee3d89;--accent2:#ff7db3;--accentDark:#a91455;--keyText:#971346;--text:#3a2430;--muted:#8f687a;--shadow:0 8px 20px rgba(87,12,50,.22)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Hiragino Sans","Yu Gothic",sans-serif;color:var(--text);background:var(--bg1)}
 body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
-button,input{font:inherit}
-button{touch-action:manipulation}
-.app{height:100%;display:grid;grid-template-rows:auto 1fr;background:
-  radial-gradient(circle at 28% 0%,rgba(255,255,255,.22),transparent 28%),
-  linear-gradient(155deg,var(--bg3) 0%,var(--bg2) 28%,var(--bg1) 100%);padding:7px;gap:7px}
-.topbar{height:62px;display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:2px 8px;color:#fff}
+button,input{font:inherit}button{touch-action:manipulation;cursor:pointer}
+.app{height:100%;display:grid;grid-template-rows:auto 1fr;background:radial-gradient(circle at 28% 0%,rgba(255,255,255,.22),transparent 28%),linear-gradient(155deg,var(--bg3) 0%,var(--bg2) 28%,var(--bg1) 100%);padding:7px;gap:7px}
+.topbar{height:72px;display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:4px 8px;color:#fff}
+.version{font-size:12px;opacity:.9;margin-right:auto;align-self:flex-end;padding-bottom:8px}
 .brand{display:flex;align-items:center;gap:8px;margin-left:auto}
 .brand-name{font-size:42px;line-height:1;font-weight:800;letter-spacing:-1.5px;text-shadow:0 2px 3px rgba(103,13,53,.36)}
-.mascot{width:58px;height:58px;object-fit:cover;object-position:78% 87%;border-radius:16px;box-shadow:0 3px 10px rgba(80,7,38,.2)}
+.mascot{width:56px;height:56px;object-fit:contain;display:block;filter:drop-shadow(0 2px 4px rgba(80,7,38,.25))}
 .gear{width:54px;height:54px;border:1px solid rgba(255,255,255,.55);border-radius:14px;background:linear-gradient(#ff91bf,#e83983);color:#fff;font-size:30px;box-shadow:var(--shadow)}
-.version{font-size:12px;opacity:.88;margin-right:auto;margin-left:3px;align-self:flex-end;padding-bottom:8px}
 .workspace{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:8px}
 .lists{min-width:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .list-card{min-width:0;min-height:0;display:grid;grid-template-rows:auto auto 1fr auto;background:linear-gradient(#fff8fb,#fff);border:2px solid rgba(255,255,255,.55);border-radius:20px;box-shadow:inset 0 0 0 2px rgba(213,35,109,.18),var(--shadow);overflow:hidden}
 .list-card.active{box-shadow:inset 0 0 0 3px #fff,0 0 0 3px var(--accentDark),var(--shadow)}
-.list-head{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:linear-gradient(180deg,#ffd3e5,#f69ec2);border-bottom:1px solid #e986ad}
-.list-title{font-size:27px;font-weight:800;color:#961446}
-.total{font-size:30px;font-weight:800;color:#98164b;font-variant-numeric:tabular-nums;white-space:nowrap}
+.list-head{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:linear-gradient(180deg,#ffd3e5,#f69ec2);border-bottom:1px solid #e986ad;gap:8px}
+.list-title{font-size:27px;font-weight:800;color:#961446}.total{font-size:30px;font-weight:800;color:#98164b;font-variant-numeric:tabular-nums;white-space:nowrap}
 .entry-bar{display:grid;grid-template-columns:1fr auto;gap:6px;padding:8px;background:#ffd8e7;border-bottom:1px solid var(--line)}
 .entry-bar input{width:100%;min-width:0;border:1px solid #eda7c4;border-radius:11px;background:rgba(255,255,255,.9);padding:10px 12px;font-size:17px;outline:none;color:var(--text)}
 .entry-bar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(238,61,137,.14)}
-.entry-bar button{border:0;border-radius:11px;background:linear-gradient(#f8619f,#dd2c77);color:white;padding:0 13px;font-weight:800}
+.entry-bar button{border:0;border-radius:11px;background:linear-gradient(#f8619f,#dd2c77);color:#fff;padding:0 13px;font-weight:800}
 .rows{min-height:0;overflow:auto;background:rgba(255,255,255,.82);overscroll-behavior:contain}
 .row{min-height:57px;border-bottom:1px solid #f0cedc;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 12px}
-.row .label{min-width:0;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.row .sub{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.row .amount{font-size:18px;font-weight:700;color:#6d2644;font-variant-numeric:tabular-nums;white-space:nowrap}
+.row .label{min-width:0;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.row .sub{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.row .amount{font-size:18px;font-weight:700;color:#6d2644;font-variant-numeric:tabular-nums;white-space:nowrap}
 .row.empty{height:57px;opacity:.5}.row.empty:after{content:"";height:1px;background:#f5d8e4;width:100%;grid-column:1/-1}
-.list-footer{padding:8px;background:#ffd5e6}
-.ac{width:100%;height:64px;border:1px solid #ce2f71;border-radius:14px;background:linear-gradient(#ff89bb,#ec3e87);color:#fff;font-size:31px;font-weight:800;box-shadow:inset 0 2px 0 rgba(255,255,255,.55),0 3px 6px rgba(120,18,61,.25)}
-.control{min-height:0;display:grid;grid-template-rows:auto auto 1fr;background:linear-gradient(160deg,rgba(255,135,183,.88),rgba(218,36,111,.88));border:2px solid rgba(255,255,255,.38);border-radius:20px;padding:10px;box-shadow:var(--shadow);position:relative}
+.list-footer{padding:8px;background:#ffd5e6}.ac{width:100%;height:64px;border:1px solid #ce2f71;border-radius:14px;background:linear-gradient(#ff89bb,#ec3e87);color:#fff;font-size:31px;font-weight:800;box-shadow:inset 0 2px 0 rgba(255,255,255,.55),0 3px 6px rgba(120,18,61,.25)}
+.control{min-height:0;display:grid;grid-template-rows:auto auto auto 1fr;background:linear-gradient(160deg,rgba(255,135,183,.88),rgba(218,36,111,.88));border:2px solid rgba(255,255,255,.38);border-radius:20px;padding:10px;box-shadow:var(--shadow);position:relative;gap:8px}
 .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.tab{height:46px;border:1px solid #d86093;border-radius:11px;background:linear-gradient(#fff,#ffe5f0);font-size:18px;font-weight:800;color:#8f1c4d}.tab.active{background:linear-gradient(#fa62a0,#df2f79);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
-.memory{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:8px 0}.mem{height:58px;border:1px solid #c42768;border-radius:12px;background:linear-gradient(#ff83b5,#ea3a84);color:white;font-size:23px;font-weight:800;box-shadow:inset 0 2px 0 rgba(255,255,255,.45)}
+.memory{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.mem{height:58px;border:1px solid #c42768;border-radius:12px;background:linear-gradient(#ff83b5,#ea3a84);color:#fff;font-size:23px;font-weight:800;box-shadow:inset 0 2px 0 rgba(255,255,255,.45)}
+.calc-display{background:linear-gradient(#fff8fb,#ffeef5);border:1px solid #e2a2bf;border-radius:16px;padding:10px 12px;box-shadow:inset 0 2px 0 rgba(255,255,255,.7)}
+.calc-memory{font-size:13px;color:var(--muted);min-height:18px}.calc-expr{font-size:18px;line-height:1.25;color:#7c3a59;min-height:22px;word-break:break-all}.calc-result{font-size:34px;line-height:1.15;font-weight:800;color:#98164b;text-align:right;font-variant-numeric:tabular-nums;min-height:40px}
 .keypad{min-height:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(5,1fr);gap:7px}
 .key{border:1px solid #e39ab8;border-radius:13px;background:linear-gradient(#fff,#ffeaf3);color:var(--keyText);font-size:32px;font-weight:700;box-shadow:inset 0 2px 0 #fff,0 3px 7px rgba(85,9,41,.18)}
-.key:active,.tab:active,.mem:active,.ac:active,.gear:active{transform:translateY(1px);filter:brightness(.97)}
-.key.op{background:linear-gradient(#ff69a7,#e83a82);color:white;border-color:#c82a6a}.key.dark{background:linear-gradient(#565563,#33323e);color:white;border-color:#25242c}.key.eq{background:linear-gradient(#ff78ae,#e72f79);color:#fff;font-size:42px}.key.small{font-size:21px}.key.plus{grid-row:4/6;grid-column:4}.key.eq{grid-row:5;grid-column:4}
-.display-mini{position:absolute;right:10px;top:-58px;background:rgba(255,255,255,.18);padding:4px 8px;border-radius:9px;color:#fff;font-size:13px}
-.settings{position:absolute;right:8px;top:8px;width:280px;background:rgba(255,250,252,.98);border:1px solid #e4a5bf;border-radius:15px;box-shadow:0 12px 30px rgba(78,8,38,.32);padding:12px;z-index:30;display:none;color:#4b3440}.settings.open{display:block}.settings h3{margin:0 0 10px;text-align:center;font-size:17px}.setting-section{border-top:1px solid #efd1dd;padding-top:10px;margin-top:8px}.setting-label{font-size:13px;font-weight:700;margin-bottom:8px}.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.swatch{border:2px solid transparent;border-radius:10px;padding:4px;background:white}.swatch.selected{border-color:#a01955}.swatch i{display:block;height:34px;border-radius:8px}.swatch span{display:block;font-size:11px;text-align:center;margin-top:3px}.switchrow{display:flex;align-items:center;justify-content:space-between;padding:8px 0;font-size:14px}.switch{width:46px;height:26px;border-radius:999px;background:#c8c8cf;padding:3px;border:0}.switch:after{content:"";display:block;width:20px;height:20px;border-radius:50%;background:white;transition:.15s}.switch.on{background:var(--accent)}.switch.on:after{transform:translateX(20px)}
+.key.op{background:linear-gradient(#ff69a7,#e83a82);color:#fff;border-color:#c82a6a}.key.dark{background:linear-gradient(#565563,#33323e);color:#fff;border-color:#25242c}.key.eq{background:linear-gradient(#ff78ae,#e72f79);color:#fff;font-size:42px}.key.small{font-size:21px}
+.settings{position:absolute;right:8px;top:8px;width:280px;background:rgba(255,250,252,.98);border:1px solid #e4a5bf;border-radius:15px;box-shadow:0 12px 30px rgba(78,8,38,.32);padding:12px;z-index:30;display:none;color:#4b3440}.settings.open{display:block}.settings h3{margin:0 0 10px;text-align:center;font-size:17px}.setting-section{border-top:1px solid #efd1dd;padding-top:10px;margin-top:8px}.setting-label{font-size:13px;font-weight:700;margin-bottom:8px}.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.swatch{border:2px solid transparent;border-radius:10px;padding:4px;background:#fff}.swatch.selected{border-color:#a01955}.swatch i{display:block;height:34px;border-radius:8px}.swatch span{display:block;font-size:11px;text-align:center;margin-top:3px}.switchrow{display:flex;align-items:center;justify-content:space-between;padding:8px 0;font-size:14px}.switch{width:46px;height:26px;border-radius:999px;background:#c8c8cf;padding:3px;border:0}.switch:after{content:"";display:block;width:20px;height:20px;border-radius:50%;background:#fff;transition:.15s}.switch.on{background:var(--accent)}.switch.on:after{transform:translateX(20px)}
 .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:#2f2730;color:#fff;border-radius:999px;padding:10px 17px;font-size:14px;opacity:0;pointer-events:none;transition:.2s;z-index:60}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media (orientation:portrait),(max-width:900px){html,body{overflow:auto}.app{height:auto;min-height:100vh}.topbar{position:sticky;top:0;z-index:40;background:linear-gradient(90deg,var(--bg2),var(--bg1));border-radius:0 0 16px 16px}.workspace{grid-template-columns:1fr}.lists{grid-template-columns:1fr}.list-card{min-height:620px}.control{min-height:720px}.brand-name{font-size:34px}.mascot{width:48px;height:48px}.version{display:none}}
 </style>
 </head>
 <body>
 <div class="app">
-  <header class="topbar">
-    <div class="version">Ver.2.0.0</div>
-    <div class="brand"><div class="brand-name">nojima</div><img class="mascot" src="mascot.png" alt="コンサルくん"></div>
-    <button class="gear" id="gear" aria-label="設定">⚙</button>
-  </header>
-  <main class="workspace">
-    <section class="lists" id="lists"></section>
-    <aside class="control">
-      <div class="tabs" id="tabs"></div>
-      <div class="memory"><button class="mem" data-action="mc">MC</button><button class="mem" data-action="mplus">M+</button><button class="mem" data-action="mminus">M−</button></div>
-      <div class="keypad" id="keypad">
-        <button class="key" data-key="7">7</button><button class="key" data-key="8">8</button><button class="key" data-key="9">9</button><button class="key op" data-key="÷">÷</button>
-        <button class="key" data-key="4">4</button><button class="key" data-key="5">5</button><button class="key" data-key="6">6</button><button class="key op" data-key="×">×</button>
-        <button class="key" data-key="1">1</button><button class="key" data-key="2">2</button><button class="key" data-key="3">3</button><button class="key op" data-key="−">−</button>
-        <button class="key" data-key="0">0</button><button class="key" data-key="00">00</button><button class="key" data-key=".">.</button><button class="key op plus" data-key="+">＋</button>
-        <button class="key op small" data-key="C">C</button><button class="key dark small" data-key="±">+/−</button><button class="key dark small" data-key="undo">↶<br><small>戻る</small></button><button class="key eq" data-key="=">＝</button>
-      </div>
-      <div class="settings" id="settings">
-        <h3>設定</h3>
-        <div class="setting-section"><div class="setting-label">テーマカラー</div><div class="swatches" id="swatches"></div></div>
-        <div class="setting-section"><div class="switchrow"><span>サウンド</span><button class="switch" id="soundSwitch" aria-label="サウンド切替"></button></div></div>
-        <div class="setting-section"><div class="switchrow"><span>数字の書式</span><strong>カンマ区切り</strong></div><div class="switchrow"><span>データ保存</span><strong>この端末</strong></div></div>
-      </div>
-    </aside>
-  </main>
+<header class="topbar">
+<div class="version">Ver.2.1.0</div>
+<div class="brand"><div class="brand-name">nojima</div><img class="mascot" src="mascot.png" alt="コンサルくん"></div>
+<button class="gear" id="gear" aria-label="設定">⚙</button>
+</header>
+<main class="workspace">
+<section class="lists" id="lists"></section>
+<aside class="control">
+  <div class="tabs" id="tabs"></div>
+  <div class="memory"><button class="mem" data-action="mc">MC</button><button class="mem" data-action="mplus">M+</button><button class="mem" data-action="mminus">M−</button></div>
+  <div class="calc-display"><div class="calc-memory" id="calcMemory"></div><div class="calc-expr" id="calcExpr"></div><div class="calc-result" id="calcResult">0</div></div>
+  <div class="keypad" id="keypad">
+    <button class="key" data-key="7">7</button><button class="key" data-key="8">8</button><button class="key" data-key="9">9</button><button class="key op" data-key="÷">÷</button>
+    <button class="key" data-key="4">4</button><button class="key" data-key="5">5</button><button class="key" data-key="6">6</button><button class="key op" data-key="×">×</button>
+    <button class="key" data-key="1">1</button><button class="key" data-key="2">2</button><button class="key" data-key="3">3</button><button class="key op" data-key="−">−</button>
+    <button class="key" data-key="0">0</button><button class="key" data-key="00">00</button><button class="key" data-key=".">.</button><button class="key op" data-key="+">＋</button>
+    <button class="key op small" data-key="C">C</button><button class="key dark small" data-key="±">+/−</button><button class="key dark small" data-key="undo">↶<br><small>戻る</small></button><button class="key eq" data-key="=">＝</button>
+  </div>
+  <div class="settings" id="settings">
+    <h3>設定</h3>
+    <div class="setting-section"><div class="setting-label">テーマカラー</div><div class="swatches" id="swatches"></div></div>
+    <div class="setting-section"><div class="switchrow"><span>サウンド</span><button class="switch" id="soundSwitch" aria-label="サウンド切替"></button></div></div>
+    <div class="setting-section"><div class="switchrow"><span>数字の書式</span><strong>カンマ区切り</strong></div><div class="switchrow"><span>データ保存</span><strong>この端末</strong></div></div>
+  </div>
+</aside>
+</main>
 </div>
 <div class="toast" id="toast"></div>
 <script>
-const THEMES={
- pink:{label:'Pink',vars:{'--bg1':'#d92a72','--bg2':'#f46eaa','--bg3':'#f9bbd5','--accent':'#ee3d89','--accent2':'#ff7db3','--accentDark':'#a91455','--op':'#eb3a84'}},
- blue:{label:'Blue',vars:{'--bg1':'#1264c5','--bg2':'#4b9cf0','--bg3':'#c9e6ff','--accent':'#2b86df','--accent2':'#70b6ff','--accentDark':'#0d4d9c','--op':'#2382df'}},
- green:{label:'Green',vars:{'--bg1':'#2c8f45','--bg2':'#68ba72','--bg3':'#d5f0d7','--accent':'#3ca457','--accent2':'#77c982','--accentDark':'#236d34','--op':'#319a4c'}},
- purple:{label:'Purple',vars:{'--bg1':'#6b42ad','--bg2':'#a375db','--bg3':'#e8d8fb','--accent':'#8b5cc5','--accent2':'#b38ce0','--accentDark':'#5a348f','--op':'#7a4db7'}}
-};
-const EMPTY_ROWS=11;
-const fresh=()=>({title:'',expr:'',display:'0',memory:0,rows:[],undo:[],redo:[]});
+const THEMES={pink:{label:'Pink',vars:{'--bg1':'#d92a72','--bg2':'#f46eaa','--bg3':'#f9bbd5','--accent':'#ee3d89','--accent2':'#ff7db3','--accentDark':'#a91455'}},blue:{label:'Blue',vars:{'--bg1':'#1264c5','--bg2':'#4b9cf0','--bg3':'#c9e6ff','--accent':'#2b86df','--accent2':'#70b6ff','--accentDark':'#0d4d9c'}},green:{label:'Green',vars:{'--bg1':'#2c8f45','--bg2':'#68ba72','--bg3':'#d5f0d7','--accent':'#3ca457','--accent2':'#77c982','--accentDark':'#236d34'}},purple:{label:'Purple',vars:{'--bg1':'#6b42ad','--bg2':'#a375db','--bg3':'#e8d8fb','--accent':'#8b5cc5','--accent2':'#b38ce0','--accentDark':'#5a348f'}}};
+const EMPTY_ROWS=11; const fresh=()=>({title:'',expr:'',display:'0',memory:0,rows:[],undo:[],redo:[]});
 let state={active:2,theme:'pink',sound:false,lists:[fresh(),fresh(),fresh()]};
-function load(){try{const x=JSON.parse(localStorage.getItem('nojima3calc-v2'));if(x&&Array.isArray(x.lists)&&x.lists.length===3)state={...state,...x};}catch(e){}}
-function save(){localStorage.setItem('nojima3calc-v2',JSON.stringify(state));}
+function load(){try{const x=JSON.parse(localStorage.getItem('nojima3calc-v2.1'));if(x&&Array.isArray(x.lists)&&x.lists.length===3)state={...state,...x};}catch(e){}}
+function save(){localStorage.setItem('nojima3calc-v2.1',JSON.stringify(state));}
 function money(n){if(n===null||n===''||!Number.isFinite(Number(n)))return '';return '¥'+Math.round(Number(n)).toLocaleString('ja-JP');}
 function esc(s){return String(s??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]));}
 function totalFor(list){return list.rows.reduce((a,r)=>a+(Number(r.amount)||0),0)}
-function titleTotal(i){const l=state.lists[i];const t=totalFor(l);return t?money(t):(l.display&&l.display!=='0'?formatDisplay(l.display):'0')}
-function formatDisplay(v){const n=Number(v);return Number.isFinite(n)?n.toLocaleString('ja-JP',{maximumFractionDigits:10}):v}
-function snapshot(i){const l=state.lists[i];l.undo.push(JSON.stringify({rows:l.rows,expr:l.expr,display:l.display,memory:l.memory}));if(l.undo.length>30)l.undo.shift();l.redo=[]}
-function restore(i,dir){const l=state.lists[i],from=dir==='undo'?l.undo:l.redo,to=dir==='undo'?l.redo:l.undo;if(!from.length)return;to.push(JSON.stringify({rows:l.rows,expr:l.expr,display:l.display,memory:l.memory}));Object.assign(l,JSON.parse(from.pop()));save();render();}
-function safeEval(expr){const x=expr.replaceAll('×','*').replaceAll('÷','/').replaceAll('−','-');if(!/^[0-9+\-*/.()\s]+$/.test(x))throw Error();const n=Function('"use strict";return ('+x+')')();if(!Number.isFinite(n))throw Error();return Math.round((n+Number.EPSILON)*1e10)/1e10}
-function beep(){if(!state.sound)return;try{const c=new (window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.frequency.value=520;g.gain.value=.035;o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.035)}catch(e){}}
+function formatDisplay(v){if(v===''||v==null)return '0'; const n=Number(v); return Number.isFinite(n)?n.toLocaleString('ja-JP',{maximumFractionDigits:10}):String(v)}
+function snapshot(i){const l=state.lists[i];l.undo.push(JSON.stringify({rows:l.rows,expr:l.expr,display:l.display,memory:l.memory,title:l.title})); if(l.undo.length>30)l.undo.shift(); l.redo=[];}
+function restore(i,dir){const l=state.lists[i],from=dir==='undo'?l.undo:l.redo,to=dir==='undo'?l.redo:l.undo;if(!from.length)return;to.push(JSON.stringify({rows:l.rows,expr:l.expr,display:l.display,memory:l.memory,title:l.title}));Object.assign(l,JSON.parse(from.pop()));save();render();}
+function safeEval(expr){const x=expr.replaceAll('×','*').replaceAll('÷','/').replaceAll('−','-'); if(!/^[0-9+\-*/.()\s]+$/.test(x))throw Error(); const n=Function('"use strict";return ('+x+')')(); if(!Number.isFinite(n))throw Error(); return Math.round((n+Number.EPSILON)*1e10)/1e10;}
+function beep(){if(!state.sound)return; try{const c=new (window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.frequency.value=520;g.gain.value=.035;o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.035)}catch(e){}}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove('show'),1200)}
-function renderLists(){document.getElementById('lists').innerHTML=state.lists.map((l,i)=>{
- const rows=l.rows.map((r,idx)=>`<div class="row" data-row="${idx}" data-list="${i}"><div><div class="label">${esc(r.label||'計算')}</div><div class="sub">${esc(r.memo||'')}</div></div><div class="amount">${r.amount!==null&&r.amount!==''?money(r.amount):''}</div></div>`).join('');
- const empties=Array.from({length:Math.max(3,EMPTY_ROWS-l.rows.length)},()=>'<div class="row empty"></div>').join('');
- return `<article class="list-card ${state.active===i?'active':''}" data-card="${i}"><div class="list-head"><div class="list-title">List${i+1}</div><div class="total">${titleTotal(i)}</div></div><div class="entry-bar"><input id="input-${i}" data-input="${i}" value="${esc(l.title)}" placeholder="型番・メモを入力" autocomplete="off" autocapitalize="characters" spellcheck="false"><button data-addtext="${i}">追加</button></div><div class="rows">${rows}${empties}</div><div class="list-footer"><button class="ac" data-clear="${i}">AC</button></div></article>`}).join('')}
-function renderTabs(){document.getElementById('tabs').innerHTML=[0,1,2].map(i=>`<button class="tab ${state.active===i?'active':''}" data-tab="${i}">List${i+1}</button>`).join('')}
-function applyTheme(){const t=THEMES[state.theme]||THEMES.pink;Object.entries(t.vars).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));document.querySelector('meta[name="theme-color"]').content=t.vars['--accent']}
-function renderSettings(){const colors={pink:'#ee3d89',blue:'#2b86df',green:'#3ca457',purple:'#8b5cc5'};document.getElementById('swatches').innerHTML=Object.keys(THEMES).map(k=>`<button class="swatch ${state.theme===k?'selected':''}" data-theme="${k}"><i style="background:${colors[k]}"></i><span>${THEMES[k].label}</span></button>`).join('');document.getElementById('soundSwitch').classList.toggle('on',state.sound)}
-function render(){applyTheme();renderLists();renderTabs();renderSettings();bind()}
-function bind(){
- document.querySelectorAll('[data-card]').forEach(x=>x.onclick=e=>{if(e.target.closest('input,button'))return;state.active=+x.dataset.card;save();render()});
- document.querySelectorAll('[data-tab]').forEach(x=>x.onclick=()=>{state.active=+x.dataset.tab;save();render()});
- document.querySelectorAll('[data-input]').forEach(x=>{x.onfocus=()=>{state.active=+x.dataset.input;save();renderTabs()};x.oninput=e=>{state.lists[+x.dataset.input].title=e.target.value;save()};x.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();addText(+x.dataset.input)}}});
- document.querySelectorAll('[data-addtext]').forEach(x=>x.onclick=()=>addText(+x.dataset.addtext));
- document.querySelectorAll('[data-clear]').forEach(x=>x.onclick=()=>clearList(+x.dataset.clear));
- document.querySelectorAll('[data-row]').forEach(x=>x.onclick=()=>deleteRow(+x.dataset.list,+x.dataset.row));
- document.querySelectorAll('[data-theme]').forEach(x=>x.onclick=()=>{state.theme=x.dataset.theme;save();render();toast('テーマを変更しました')});
-}
-function addText(i){const l=state.lists[i],txt=l.title.trim();if(!txt)return;snapshot(i);l.rows.push({label:txt,memo:'',amount:null});l.title='';save();render();setTimeout(()=>document.getElementById('input-'+i)?.focus(),0);toast('List'+(i+1)+'に追加しました')}
-function deleteRow(i,idx){if(!confirm('この行を削除しますか？'))return;snapshot(i);state.lists[i].rows.splice(idx,1);save();render()}
-function clearList(i){if(!confirm('List'+(i+1)+'をすべて消去しますか？'))return;snapshot(i);Object.assign(state.lists[i],fresh());save();render()}
-function press(k){beep();const i=state.active,l=state.lists[i];
- if(k==='undo'){restore(i,'undo');return}
- if(k==='C'){l.expr='';l.display='0';save();render();return}
- if(k==='±'){if(l.expr){l.expr=l.expr.startsWith('-')?l.expr.slice(1):'-'+l.expr;l.display=l.expr}save();render();return}
- if(k==='='){if(!l.expr)return;try{const r=safeEval(l.expr);snapshot(i);l.display=String(r);const label=l.title.trim()||'計算';l.rows.push({label,memo:l.expr+' =',amount:r});l.title='';l.expr='';save();render();toast('List'+(i+1)+'に計算結果を追加')}catch(e){toast('計算式を確認してください')}return}
- const op=['+','−','×','÷'].includes(k);if(op){if(!l.expr&&k==='−')l.expr='−';else if(l.expr&&!/[+−×÷]$/.test(l.expr))l.expr+=k}else l.expr+=k;l.display=l.expr||'0';save();render()}
-function memAction(a){const l=state.lists[state.active],n=Number(l.display)||0;if(a==='mc')l.memory=0;if(a==='mplus')l.memory+=n;if(a==='mminus')l.memory-=n;save();toast(a==='mc'?'メモリーをクリア':'メモリー '+formatDisplay(l.memory))}
-document.getElementById('keypad').onclick=e=>{const b=e.target.closest('[data-key]');if(b)press(b.dataset.key)};
-document.querySelector('.memory').onclick=e=>{const b=e.target.closest('[data-action]');if(b)memAction(b.dataset.action)};
-document.getElementById('gear').onclick=()=>document.getElementById('settings').classList.toggle('open');
-document.getElementById('soundSwitch').onclick=()=>{state.sound=!state.sound;save();renderSettings();beep()};
-document.addEventListener('pointerdown',e=>{const s=document.getElementById('settings');if(s.classList.contains('open')&&!s.contains(e.target)&&!document.getElementById('gear').contains(e.target))s.classList.remove('open')});
-document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;const m={'Enter':'=','=':'=','Escape':'C','/':'÷','*':'×','-':'−','+':'+','.':'.'};const k=/^[0-9]$/.test(e.key)?e.key:m[e.key];if(k){e.preventDefault();press(k)}});
-load();render();
-if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+function current(){return state.lists[state.active]}
+function renderLists(){document.getElementById('lists').innerHTML=state.lists.map((l,i)=>{const rows=l.rows.map((r,idx)=>`<div class="row" data-row="${idx}" data-list="${i}"><div><div class="label">${esc(r.label||'計算結果')}</div><div class="sub">${esc(r.memo||'')}</div></div><div class="amount">${r.amount!==null&&r.amount!==''?money(r.amount):''}</div></div>`).join('');const empties=Array.from({length:Math.max(3,EMPTY_ROWS-l.rows.length)},()=>'<div class="row empty"></div>').join('');return `<article class="list-card ${state.active===i?'active':''}" data-card="${i}"><div class="list-head"><div class="list-title">List${i+1}</div><div class="total">${money(totalFor(l))||'0'}</div></div><div class="entry-bar"><input id="input-${i}" data-input="${i}" value="${esc(l.title)}" placeholder="型番・メモを入力" autocomplete="off" autocapitalize="characters" spellcheck="false"><button type="button" data-addtext="${i}">追加</button></div><div class="rows">${rows}${empties}</div><div class="list-footer"><button type="button" class="ac" data-clear="${i}">AC</button></div></article>`}).join('');}
+function renderTabs(){document.getElementById('tabs').innerHTML=[0,1,2].map(i=>`<button type="button" class="tab ${state.active===i?'active':''}" data-tab="${i}">List${i+1}</button>`).join('');}
+function applyTheme(){const t=THEMES[state.theme]||THEMES.pink;Object.entries(t.vars).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));document.querySelector('meta[name="theme-color"]').content=t.vars['--accent'];}
+function renderSettings(){const colors={pink:'#ee3d89',blue:'#2b86df',green:'#3ca457',purple:'#8b5cc5'};document.getElementById('swatches').innerHTML=Object.keys(THEMES).map(k=>`<button type="button" class="swatch ${state.theme===k?'selected':''}" data-theme="${k}"><i style="background:${colors[k]}"></i><span>${THEMES[k].label}</span></button>`).join('');document.getElementById('soundSwitch').classList.toggle('on',state.sound);}
+function renderCalc(){const l=current();document.getElementById('calcMemory').textContent=l.memory?('M: '+formatDisplay(l.memory)):'';document.getElementById('calcExpr').textContent=l.expr||' ';document.getElementById('calcResult').textContent=formatDisplay(l.display||'0');}
+function render(){applyTheme();renderLists();renderTabs();renderSettings();renderCalc();bind();}
+function bind(){document.querySelectorAll('[data-card]').forEach(x=>x.addEventListener('click',e=>{if(e.target.closest('input,button'))return;state.active=+x.dataset.card;save();render();}));document.querySelectorAll('[data-tab]').forEach(x=>x.addEventListener('click',()=>{state.active=+x.dataset.tab;save();render();}));document.querySelectorAll('[data-input]').forEach(x=>{x.addEventListener('focus',()=>{state.active=+x.dataset.input;save();renderTabs();renderCalc();});x.addEventListener('input',e=>{state.lists[+x.dataset.input].title=e.target.value;save();});x.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addText(+x.dataset.input);}})});document.querySelectorAll('[data-addtext]').forEach(x=>x.addEventListener('click',()=>addText(+x.dataset.addtext)));document.querySelectorAll('[data-clear]').forEach(x=>x.addEventListener('click',()=>clearList(+x.dataset.clear)));document.querySelectorAll('[data-row]').forEach(x=>x.addEventListener('click',()=>deleteRow(+x.dataset.list,+x.dataset.row)));document.querySelectorAll('[data-theme]').forEach(x=>x.addEventListener('click',()=>{state.theme=x.dataset.theme;save();render();toast('テーマを変更しました');}));}
+function addText(i){const l=state.lists[i],txt=l.title.trim();if(!txt)return;snapshot(i);l.rows.push({label:txt,memo:'',amount:null});l.title='';save();render();setTimeout(()=>document.getElementById('input-'+i)?.focus(),0);toast('List'+(i+1)+'に追加しました');}
+function deleteRow(i,idx){if(!confirm('この行を削除しますか？'))return;snapshot(i);state.lists[i].rows.splice(idx,1);save();render();}
+function clearList(i){if(!confirm('List'+(i+1)+'をすべて消去しますか？'))return;Object.assign(state.lists[i],fresh());save();render();}
+function isTrailingOp(expr){return /[+−×÷.]$/.test(expr)}
+function press(k){beep();const i=state.active,l=state.lists[i]; if(k==='undo'){restore(i,'undo');return;} if(k==='C'){snapshot(i);l.expr='';l.display='0';save();renderCalc();return;} if(k==='±'){snapshot(i); if(l.expr){ if(/^-/.test(l.expr))l.expr=l.expr.slice(1); else l.expr='-'+l.expr; l.display=l.expr; } else { l.display=String(-(Number(l.display)||0)); } save(); renderCalc(); return;} if(k==='='){if(!l.expr) return; try{const r=safeEval(l.expr); snapshot(i); const exprText=l.expr; l.display=String(r); l.rows.push({label:l.title.trim()||'計算結果', memo:exprText+' = '+formatDisplay(r), amount:r}); l.title=''; l.expr=''; save(); render(); toast('計算結果を追加しました'); }catch(e){toast('計算式を確認してください');} return;} const op=['+','−','×','÷'].includes(k); snapshot(i); if(op){ if(!l.expr && k==='−'){l.expr='−';} else if(!l.expr){l.expr=(Number(l.display)||0)+k;} else if(isTrailingOp(l.expr)){ l.expr=l.expr.slice(0,-1)+k; } else { l.expr+=k; } } else if(k==='.') { const seg=(l.expr.split(/[+−×÷]/).pop()||''); if(!seg.includes('.')) l.expr += (seg===''?'0.':'.'); } else { l.expr += k; } try{ l.display=l.expr && !isTrailingOp(l.expr) ? String(safeEval(l.expr)) : (l.expr||'0'); } catch(e){ l.display=l.expr||'0'; } save(); renderCalc(); }
+function memAction(a){const l=current(),n=Number(l.display)||0; if(a==='mc')l.memory=0; if(a==='mplus')l.memory+=n; if(a==='mminus')l.memory-=n; save(); renderCalc(); toast(a==='mc'?'メモリーをクリア':'メモリー '+formatDisplay(l.memory));}
+document.getElementById('keypad').addEventListener('click',e=>{const b=e.target.closest('[data-key]'); if(b) press(b.dataset.key);});
+document.querySelector('.memory').addEventListener('click',e=>{const b=e.target.closest('[data-action]'); if(b) memAction(b.dataset.action);});
+document.getElementById('gear').addEventListener('click',()=>document.getElementById('settings').classList.toggle('open'));
+document.getElementById('soundSwitch').addEventListener('click',()=>{state.sound=!state.sound;save();renderSettings();beep();});
+document.addEventListener('pointerdown',e=>{const s=document.getElementById('settings'); if(s.classList.contains('open') && !s.contains(e.target) && !document.getElementById('gear').contains(e.target)) s.classList.remove('open');});
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return; const m={'Enter':'=','=':'=','Escape':'C','/':'÷','*':'×','-':'−','+':'+','.':'.'}; const k=/^[0-9]$/.test(e.key)?e.key:m[e.key]; if(k){e.preventDefault(); press(k);} });
+load(); render(); if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script>
-</body>
-</html>
+</body></html>
