@@ -12,36 +12,24 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <title>nojima 3連電卓</title>
 <style>
-:root{
-  --bg1:#d92a72;--bg2:#f46eaa;--bg3:#f9bbd5;
-  --accent:#ee3d89;--accentDark:#a91455;
-  --text:#3a2430;--muted:#906b7c;--line:#efd0dd;
-  --shadow:0 6px 16px rgba(87,12,50,.20);
-}
+:root{--bg1:#d92a72;--bg2:#f46eaa;--bg3:#f9bbd5;--accent:#ee3d89;--accentDark:#a91455;--text:#3a2430;--muted:#906b7c;--line:#efd0dd;--shadow:0 6px 16px rgba(87,12,50,.20)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Hiragino Sans","Yu Gothic",sans-serif;color:var(--text);background:var(--bg1)}
-body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
-button,input{font:inherit} button{touch-action:manipulation}
-.app{
-  height:100%;
-  display:grid;
-  grid-template-rows:58px minmax(0,1fr);
-  gap:6px;padding:6px;
-  background:radial-gradient(circle at 25% 0%,rgba(255,255,255,.20),transparent 28%),linear-gradient(155deg,var(--bg3),var(--bg2) 30%,var(--bg1));
-}
-.topbar{display:flex;align-items:center;gap:10px;color:white;padding:0 8px;min-width:0}
-.version{font-size:12px;opacity:.9;margin-right:auto}
-.brand{display:flex;align-items:center;gap:6px;min-width:0}
-.brand-name{font-size:37px;line-height:1;font-weight:850;letter-spacing:-1.5px;text-shadow:0 2px 3px rgba(103,13,53,.36)}
-.mascot{width:48px;height:48px;object-fit:contain;display:block;filter:drop-shadow(0 2px 3px rgba(80,7,38,.22))}
-.gear{width:48px;height:48px;border:1px solid rgba(255,255,255,.55);border-radius:13px;background:linear-gradient(#ff91bf,#e83983);color:#fff;font-size:27px;box-shadow:var(--shadow)}
-.workspace{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:7px}
-.lists{min-width:0;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
-.list-card{min-width:0;min-height:0;display:grid;grid-template-rows:62px 58px minmax(0,1fr) 58px;background:linear-gradient(#fff8fb,#fff);border:2px solid rgba(255,255,255,.55);border-radius:18px;box-shadow:inset 0 0 0 2px rgba(213,35,109,.16),var(--shadow);overflow:hidden}
+html,body{margin:0;width:100%;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Hiragino Sans","Yu Gothic",sans-serif;color:var(--text);background:var(--bg1);overflow:auto}
+body{padding:env(safe-area-inset-top) env(safe-area-inset-right) max(env(safe-area-inset-bottom),8px) env(safe-area-inset-left)}
+button,input{font:inherit} button{touch-action:manipulation;cursor:pointer}
+.app{min-height:calc(100svh - env(safe-area-inset-top) - env(safe-area-inset-bottom));display:grid;grid-template-rows:auto 1fr;gap:6px;padding:6px;background:radial-gradient(circle at 25% 0%,rgba(255,255,255,.20),transparent 28%),linear-gradient(155deg,var(--bg3),var(--bg2) 30%,var(--bg1))}
+.topbar{display:flex;align-items:center;gap:10px;color:#fff;padding:2px 8px;min-width:0;flex-wrap:wrap}
+.version{font-size:13px;font-weight:700;opacity:.95;margin-right:auto}
+.brand{display:flex;align-items:center;gap:8px;min-width:0}
+.brand-name{font-size:clamp(28px,3.6vw,42px);line-height:1;font-weight:850;letter-spacing:-1.5px;text-shadow:0 2px 3px rgba(103,13,53,.36)}
+.mascot{width:44px;height:44px;object-fit:contain;display:block;filter:drop-shadow(0 2px 3px rgba(80,7,38,.22))}
+.gear{width:46px;height:46px;border:1px solid rgba(255,255,255,.55);border-radius:13px;background:linear-gradient(#ff91bf,#e83983);color:#fff;font-size:26px;box-shadow:var(--shadow)}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,390px);gap:7px;min-height:0}
+.lists{min-width:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.list-card{min-width:0;min-height:0;display:grid;grid-template-rows:60px 56px minmax(420px,1fr) 56px;background:linear-gradient(#fff8fb,#fff);border:2px solid rgba(255,255,255,.55);border-radius:18px;box-shadow:inset 0 0 0 2px rgba(213,35,109,.16),var(--shadow);overflow:hidden}
 .list-card.active{box-shadow:inset 0 0 0 3px #fff,0 0 0 3px var(--accentDark),var(--shadow)}
 .list-head{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0 14px;background:linear-gradient(#ffd3e5,#f69ec2);border-bottom:1px solid #e986ad}
-.list-title{font-size:25px;font-weight:850;color:#961446}
-.total{font-size:27px;font-weight:850;color:#98164b;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.list-title{font-size:24px;font-weight:850;color:#961446}.total{font-size:clamp(20px,2vw,27px);font-weight:850;color:#98164b;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .entry-bar{display:grid;grid-template-columns:minmax(0,1fr) 58px;gap:5px;padding:7px;background:#ffd8e7;border-bottom:1px solid var(--line)}
 .entry-bar input{min-width:0;border:1px solid #eda7c4;border-radius:10px;background:rgba(255,255,255,.92);padding:8px 10px;font-size:16px;outline:none}
 .entry-bar button{border:0;border-radius:10px;background:linear-gradient(#f8619f,#dd2c77);color:#fff;font-weight:800}
@@ -51,30 +39,26 @@ button,input{font:inherit} button{touch-action:manipulation}
 .row .label{min-width:0;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .row .sub{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
 .row .amount{font-size:19px;font-weight:800;color:#7d244c;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:64px;text-align:right}
-.row.empty .label{color:#c8a7b6}
-.row.empty .label:after{content:"タップして金額入力";font-size:11px}
-.list-footer{padding:6px;background:#ffd5e6}.ac{width:100%;height:46px;border:1px solid #ce2f71;border-radius:12px;background:linear-gradient(#ff89bb,#ec3e87);color:#fff;font-size:26px;font-weight:850}
-.control{min-height:0;display:grid;grid-template-rows:42px 48px 78px minmax(0,1fr);gap:6px;background:linear-gradient(160deg,rgba(255,135,183,.9),rgba(218,36,111,.9));border:2px solid rgba(255,255,255,.4);border-radius:18px;padding:8px;box-shadow:var(--shadow);position:relative}
+.row.empty .label{color:#c8a7b6}.row.empty .label:after{content:"タップして金額入力";font-size:11px}
+.list-footer{padding:6px;background:#ffd5e6}.ac{width:100%;height:44px;border:1px solid #ce2f71;border-radius:12px;background:linear-gradient(#ff89bb,#ec3e87);color:#fff;font-size:24px;font-weight:850}
+.control{min-height:0;display:grid;grid-template-rows:40px 46px 76px minmax(300px,1fr);gap:6px;background:linear-gradient(160deg,rgba(255,135,183,.9),rgba(218,36,111,.9));border:2px solid rgba(255,255,255,.4);border-radius:18px;padding:8px;box-shadow:var(--shadow);position:relative}
 .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.tab{border:1px solid #d86093;border-radius:10px;background:linear-gradient(#fff,#ffe5f0);font-size:17px;font-weight:800;color:#8f1c4d}.tab.active{background:linear-gradient(#fa62a0,#df2f79);color:#fff}
 .memory{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.mem{border:1px solid #c42768;border-radius:10px;background:linear-gradient(#ff83b5,#ea3a84);color:#fff;font-size:21px;font-weight:850}
 .calc-display{background:linear-gradient(#fff8fb,#ffeef5);border:1px solid #e2a2bf;border-radius:13px;padding:7px 10px;box-shadow:inset 0 2px 0 rgba(255,255,255,.7);overflow:hidden}
-.mode-line{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:18px;color:#8f6074;font-size:12px}
-.calc-expr{font-size:14px;line-height:1.15;color:#7c3a59;height:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.calc-result{font-size:31px;line-height:1.05;font-weight:850;color:#98164b;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.keypad{min-height:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(5,minmax(0,1fr));gap:5px}
-.key{min-height:0;border:1px solid #e39ab8;border-radius:11px;background:linear-gradient(#fff,#ffeaf3);color:#971346;font-size:29px;font-weight:750;box-shadow:inset 0 2px 0 #fff,0 2px 5px rgba(85,9,41,.16)}
-.key.op{background:linear-gradient(#ff69a7,#e83a82);color:#fff;border-color:#c82a6a}.key.dark{background:linear-gradient(#565563,#33323e);color:#fff;border-color:#25242c}.key.eq{background:linear-gradient(#ff78ae,#e72f79);color:#fff;font-size:39px}.key.small{font-size:19px}
+.mode-line{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:18px;color:#8f6074;font-size:12px}.calc-expr{font-size:14px;line-height:1.15;color:#7c3a59;height:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.calc-result{font-size:31px;line-height:1.05;font-weight:850;color:#98164b;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.keypad{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(5,minmax(54px,1fr));gap:5px;min-height:0}
+.key{min-height:54px;border:1px solid #e39ab8;border-radius:11px;background:linear-gradient(#fff,#ffeaf3);color:#971346;font-size:28px;font-weight:750;box-shadow:inset 0 2px 0 #fff,0 2px 5px rgba(85,9,41,.16)}
+.key.op{background:linear-gradient(#ff69a7,#e83a82);color:#fff;border-color:#c82a6a}.key.dark{background:linear-gradient(#565563,#33323e);color:#fff;border-color:#25242c}.key.eq{background:linear-gradient(#ff78ae,#e72f79);color:#fff;font-size:37px}.key.small{font-size:19px}
 .settings{position:absolute;right:7px;top:7px;width:270px;background:rgba(255,250,252,.99);border:1px solid #e4a5bf;border-radius:14px;box-shadow:0 12px 30px rgba(78,8,38,.32);padding:11px;z-index:30;display:none}.settings.open{display:block}.settings h3{margin:0 0 9px;text-align:center;font-size:16px}.setting-section{border-top:1px solid #efd1dd;padding-top:9px;margin-top:7px}.setting-label{font-size:13px;font-weight:700;margin-bottom:7px}.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.swatch{border:2px solid transparent;border-radius:9px;padding:3px;background:#fff}.swatch.selected{border-color:#a01955}.swatch i{display:block;height:30px;border-radius:7px}.swatch span{display:block;font-size:10px;text-align:center;margin-top:3px}.switchrow{display:flex;align-items:center;justify-content:space-between;padding:7px 0;font-size:13px}.switch{width:44px;height:25px;border-radius:999px;background:#c8c8cf;padding:3px;border:0}.switch:after{content:"";display:block;width:19px;height:19px;border-radius:50%;background:#fff;transition:.15s}.switch.on{background:var(--accent)}.switch.on:after{transform:translateX(19px)}
 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);background:#2f2730;color:#fff;border-radius:999px;padding:9px 15px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:60}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-@media (orientation:portrait),(max-width:900px){
- html,body{overflow:auto}.app{height:auto;min-height:100vh;grid-template-rows:56px auto}.topbar{position:sticky;top:0;z-index:40;background:linear-gradient(90deg,var(--bg2),var(--bg1));border-radius:0 0 15px 15px}.workspace{grid-template-columns:1fr}.lists{grid-template-columns:1fr}.list-card{min-height:580px}.control{min-height:650px}.brand-name{font-size:32px}.mascot{width:43px;height:43px}.version{display:none}
-}
+@media (max-width:1100px){.workspace{grid-template-columns:1fr}.control{order:2}.lists{order:1}}
+@media (orientation:portrait),(max-width:900px){.topbar{position:sticky;top:0;z-index:40;background:linear-gradient(90deg,var(--bg2),var(--bg1));border-radius:0 0 15px 15px}.lists{grid-template-columns:1fr}.list-card{min-height:560px}.control{min-height:620px}.brand-name{font-size:32px}.mascot{width:40px;height:40px}}
 </style>
 </head>
 <body>
 <div class="app">
   <header class="topbar">
-    <div class="version">Ver.2.2.0</div>
+    <div class="version">Ver.2.3.0</div>
     <div class="brand"><div class="brand-name">nojima</div><img class="mascot" src="mascot.png" alt="コンサルくん"></div>
     <button class="gear" id="gear" aria-label="設定">⚙</button>
   </header>
@@ -83,11 +67,7 @@ button,input{font:inherit} button{touch-action:manipulation}
     <aside class="control">
       <div class="tabs" id="tabs"></div>
       <div class="memory"><button class="mem" data-action="mc">MC</button><button class="mem" data-action="mplus">M+</button><button class="mem" data-action="mminus">M−</button></div>
-      <div class="calc-display">
-        <div class="mode-line"><span id="modeLabel">電卓</span><span id="calcMemory"></span></div>
-        <div class="calc-expr" id="calcExpr"></div>
-        <div class="calc-result" id="calcResult">0</div>
-      </div>
+      <div class="calc-display"><div class="mode-line"><span id="modeLabel">電卓</span><span id="calcMemory"></span></div><div class="calc-expr" id="calcExpr"></div><div class="calc-result" id="calcResult">0</div></div>
       <div class="keypad" id="keypad">
         <button class="key" data-key="7">7</button><button class="key" data-key="8">8</button><button class="key" data-key="9">9</button><button class="key op" data-key="÷">÷</button>
         <button class="key" data-key="4">4</button><button class="key" data-key="5">5</button><button class="key" data-key="6">6</button><button class="key op" data-key="×">×</button>
@@ -95,162 +75,43 @@ button,input{font:inherit} button{touch-action:manipulation}
         <button class="key" data-key="0">0</button><button class="key" data-key="00">00</button><button class="key" data-key=".">.</button><button class="key op" data-key="+">＋</button>
         <button class="key op small" data-key="C">C</button><button class="key dark small" data-key="±">+/−</button><button class="key dark small" data-key="undo">↶<br><small>戻る</small></button><button class="key eq" data-key="=">＝</button>
       </div>
-      <div class="settings" id="settings">
-        <h3>設定</h3>
-        <div class="setting-section"><div class="setting-label">テーマカラー</div><div class="swatches" id="swatches"></div></div>
-        <div class="setting-section"><div class="switchrow"><span>サウンド</span><button class="switch" id="soundSwitch"></button></div></div>
-        <div class="setting-section"><div class="switchrow"><span>行タップ入力</span><strong>ON</strong></div><div class="switchrow"><span>データ保存</span><strong>この端末</strong></div></div>
-      </div>
+      <div class="settings" id="settings"><h3>設定</h3><div class="setting-section"><div class="setting-label">テーマカラー</div><div class="swatches" id="swatches"></div></div><div class="setting-section"><div class="switchrow"><span>サウンド</span><button class="switch" id="soundSwitch"></button></div></div><div class="setting-section"><div class="switchrow"><span>行タップ入力</span><strong>ON</strong></div><div class="switchrow"><span>データ保存</span><strong>この端末</strong></div><div class="switchrow"><span>バージョン</span><strong>2.3.0</strong></div></div></div>
     </aside>
   </main>
 </div>
 <div class="toast" id="toast"></div>
 <script>
-const THEMES={
- pink:{label:'Pink',vars:{'--bg1':'#d92a72','--bg2':'#f46eaa','--bg3':'#f9bbd5','--accent':'#ee3d89','--accentDark':'#a91455'}},
- blue:{label:'Blue',vars:{'--bg1':'#1264c5','--bg2':'#4b9cf0','--bg3':'#c9e6ff','--accent':'#2b86df','--accentDark':'#0d4d9c'}},
- green:{label:'Green',vars:{'--bg1':'#2c8f45','--bg2':'#68ba72','--bg3':'#d5f0d7','--accent':'#3ca457','--accentDark':'#236d34'}},
- purple:{label:'Purple',vars:{'--bg1':'#6b42ad','--bg2':'#a375db','--bg3':'#e8d8fb','--accent':'#8b5cc5','--accentDark':'#5a348f'}}
-};
-const MIN_ROWS=12;
-const fresh=()=>({title:'',expr:'',display:'0',memory:0,rows:[],undo:[],redo:[],activeRow:null});
-let state={active:2,theme:'pink',sound:false,lists:[fresh(),fresh(),fresh()]};
-
-function load(){
-  try{
-    const newer=JSON.parse(localStorage.getItem('nojima3calc-v2.2'));
-    if(newer&&Array.isArray(newer.lists)&&newer.lists.length===3){state={...state,...newer};return}
-    const old=JSON.parse(localStorage.getItem('nojima3calc-v2.1'));
-    if(old&&Array.isArray(old.lists)&&old.lists.length===3){
-      state={...state,...old,lists:old.lists.map(l=>({...fresh(),...l,activeRow:null}))};
-    }
-  }catch(e){}
-}
-function save(){localStorage.setItem('nojima3calc-v2.2',JSON.stringify(state))}
+const THEMES={pink:{label:'Pink',vars:{'--bg1':'#d92a72','--bg2':'#f46eaa','--bg3':'#f9bbd5','--accent':'#ee3d89','--accentDark':'#a91455'}},blue:{label:'Blue',vars:{'--bg1':'#1264c5','--bg2':'#4b9cf0','--bg3':'#c9e6ff','--accent':'#2b86df','--accentDark':'#0d4d9c'}},green:{label:'Green',vars:{'--bg1':'#2c8f45','--bg2':'#68ba72','--bg3':'#d5f0d7','--accent':'#3ca457','--accentDark':'#236d34'}},purple:{label:'Purple',vars:{'--bg1':'#6b42ad','--bg2':'#a375db','--bg3':'#e8d8fb','--accent':'#8b5cc5','--accentDark':'#5a348f'}}};
+const MIN_ROWS=12;const fresh=()=>({title:'',expr:'',display:'0',memory:0,rows:[],undo:[],redo:[],activeRow:null});
+let state={active:0,theme:'pink',sound:false,lists:[fresh(),fresh(),fresh()]};
+function load(){try{const keys=['nojima3calc-v2.3','nojima3calc-v2.2','nojima3calc-v2.1'];for(const k of keys){const d=JSON.parse(localStorage.getItem(k));if(d&&Array.isArray(d.lists)&&d.lists.length===3){state={...state,...d,lists:d.lists.map(l=>({...fresh(),...l,activeRow:Number.isInteger(l.activeRow)?l.activeRow:null}))};break}}}catch(e){}}
+function save(){localStorage.setItem('nojima3calc-v2.3',JSON.stringify(state))}
 function esc(s){return String(s??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
-function numFromRow(r){const n=Number(r?.amount);return Number.isFinite(n)?n:0}
-function totalFor(l){return l.rows.reduce((a,r)=>a+numFromRow(r),0)}
-function money(n){return Number(n).toLocaleString('ja-JP',{maximumFractionDigits:10})}
-function fmtAmount(v){if(v===null||v===undefined||v==='')return '';const n=Number(v);return Number.isFinite(n)?n.toLocaleString('ja-JP',{maximumFractionDigits:10}):String(v)}
+function fmt(v){if(v===null||v===undefined||v==='')return '';const n=Number(v);return Number.isFinite(n)?n.toLocaleString('ja-JP',{maximumFractionDigits:10}):String(v)}
+function totalFor(l){return l.rows.reduce((a,r)=>a+(Number(r.amount)||0),0)}
 function ensureRow(l,idx){while(l.rows.length<=idx)l.rows.push({label:'',memo:'',amount:''});return l.rows[idx]}
-function trimRows(l){while(l.rows.length>MIN_ROWS){const r=l.rows[l.rows.length-1];if((r.label||'')===''&&(r.memo||'')===''&&(r.amount===null||r.amount===undefined||r.amount===''))l.rows.pop();else break}}
-function snapshot(i){const l=state.lists[i];l.undo.push(JSON.stringify({rows:l.rows,expr:l.expr,display:l.display,memory:l.memory,title:l.title,activeRow:l.activeRow}));if(l.undo.length>30)l.undo.shift();l.redo=[]}
-function restore(i){const l=state.lists[i];if(!l.undo.length)return;l.redo.push(JSON.stringify({rows:l.rows,expr:l.expr,display:l.display,memory:l.memory,title:l.title,activeRow:l.activeRow}));Object.assign(l,JSON.parse(l.undo.pop()));save();render()}
+function rowEmpty(r){return !(r && ((r.label||'')!=='' || (r.memo||'')!=='' || !(r.amount===null||r.amount===undefined||r.amount==='')))}
+function snapshot(i){const l=state.lists[i];l.undo.push(JSON.stringify({title:l.title,expr:l.expr,display:l.display,memory:l.memory,rows:l.rows,activeRow:l.activeRow}));if(l.undo.length>30)l.undo.shift();l.redo=[]}
+function restore(i){const l=state.lists[i];if(!l.undo.length)return;l.redo.push(JSON.stringify({title:l.title,expr:l.expr,display:l.display,memory:l.memory,rows:l.rows,activeRow:l.activeRow}));Object.assign(l,JSON.parse(l.undo.pop()));save();render()}
 function safeEval(expr){const x=expr.replaceAll('×','*').replaceAll('÷','/').replaceAll('−','-');if(!/^[0-9+\-*/.()\s]+$/.test(x))throw Error();const n=Function('"use strict";return ('+x+')')();if(!Number.isFinite(n))throw Error();return Math.round((n+Number.EPSILON)*1e10)/1e10}
 function beep(){if(!state.sound)return;try{const c=new (window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.frequency.value=520;g.gain.value=.03;o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.03)}catch(e){}}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove('show'),1100)}
 function current(){return state.lists[state.active]}
 function selectedRow(){const l=current();return Number.isInteger(l.activeRow)?ensureRow(l,l.activeRow):null}
-
-function renderLists(){
- document.getElementById('lists').innerHTML=state.lists.map((l,i)=>{
-   const count=Math.max(MIN_ROWS,l.rows.length);
-   const rows=Array.from({length:count},(_,idx)=>{
-      const r=l.rows[idx]||{label:'',memo:'',amount:''};
-      const selected=state.active===i&&l.activeRow===idx;
-      const empty=!(r.label||r.memo||r.amount!==''&&r.amount!==null&&r.amount!==undefined);
-      return `<div class="row ${selected?'selected':''} ${empty?'empty':''}" data-row="${idx}" data-list="${i}">
-        <div><div class="label">${r.label?esc(r.label):''}</div><div class="sub">${r.memo?esc(r.memo):''}</div></div>
-        <div class="amount">${fmtAmount(r.amount)}</div>
-      </div>`;
-   }).join('');
-   return `<article class="list-card ${state.active===i?'active':''}" data-card="${i}">
-     <div class="list-head"><div class="list-title">List${i+1}</div><div class="total">${money(totalFor(l))}</div></div>
-     <div class="entry-bar"><input id="input-${i}" data-input="${i}" value="${esc(l.title)}" placeholder="型番・メモを入力" autocomplete="off" autocapitalize="characters" spellcheck="false"><button type="button" data-addtext="${i}">追加</button></div>
-     <div class="rows">${rows}</div>
-     <div class="list-footer"><button type="button" class="ac" data-clear="${i}">AC</button></div>
-   </article>`;
- }).join('')
-}
-function renderTabs(){document.getElementById('tabs').innerHTML=[0,1,2].map(i=>`<button type="button" class="tab ${state.active===i?'active':''}" data-tab="${i}">List${i+1}</button>`).join('')}
 function applyTheme(){const t=THEMES[state.theme]||THEMES.pink;Object.entries(t.vars).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));document.querySelector('meta[name="theme-color"]').content=t.vars['--accent']}
+function renderTabs(){document.getElementById('tabs').innerHTML=[0,1,2].map(i=>`<button type="button" class="tab ${state.active===i?'active':''}" data-tab="${i}">List${i+1}</button>`).join('')}
 function renderSettings(){const colors={pink:'#ee3d89',blue:'#2b86df',green:'#3ca457',purple:'#8b5cc5'};document.getElementById('swatches').innerHTML=Object.keys(THEMES).map(k=>`<button type="button" class="swatch ${state.theme===k?'selected':''}" data-theme="${k}"><i style="background:${colors[k]}"></i><span>${THEMES[k].label}</span></button>`).join('');document.getElementById('soundSwitch').classList.toggle('on',state.sound)}
-function renderCalc(){
- const l=current(),r=selectedRow();
- document.getElementById('modeLabel').textContent=r?`List${state.active+1}・${l.activeRow+1}行目 金額入力`:'電卓';
- document.getElementById('calcMemory').textContent=l.memory?('M '+money(l.memory)):'';
- document.getElementById('calcExpr').textContent=r?'次の行をタップすると合計に加算されます':(l.expr||'');
- document.getElementById('calcResult').textContent=r?(r.amount===''?'0':fmtAmount(r.amount)):(l.display||'0');
-}
-function render(){applyTheme();renderLists();renderTabs();renderSettings();renderCalc();bind()}
-
-function bind(){
- document.querySelectorAll('[data-card]').forEach(x=>x.onclick=e=>{if(e.target.closest('input,button,.row'))return;state.active=+x.dataset.card;save();render()});
- document.querySelectorAll('[data-tab]').forEach(x=>x.onclick=()=>{state.active=+x.dataset.tab;save();render()});
- document.querySelectorAll('[data-row]').forEach(x=>x.onclick=()=>selectRow(+x.dataset.list,+x.dataset.row));
- document.querySelectorAll('[data-input]').forEach(x=>{
-   x.onfocus=()=>{state.active=+x.dataset.input;save();renderTabs();renderCalc()};
-   x.oninput=e=>{state.lists[+x.dataset.input].title=e.target.value;save()};
-   x.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();addText(+x.dataset.input)}}
- });
- document.querySelectorAll('[data-addtext]').forEach(x=>x.onclick=()=>addText(+x.dataset.addtext));
- document.querySelectorAll('[data-clear]').forEach(x=>x.onclick=()=>clearList(+x.dataset.clear));
- document.querySelectorAll('[data-theme]').forEach(x=>x.onclick=()=>{state.theme=x.dataset.theme;save();render();toast('テーマを変更しました')});
-}
-function selectRow(i,idx){
- state.active=i;
- const l=state.lists[i];
- ensureRow(l,idx);
- l.activeRow=idx;
- save();render()
-}
-function addText(i){
- const l=state.lists[i],txt=l.title.trim();if(!txt)return;
- snapshot(i);
- let idx=l.rows.findIndex(r=>(r.label||'')===''&&(r.memo||'')===''&&(r.amount===null||r.amount===undefined||r.amount===''));
- if(idx<0)idx=l.rows.length;
- const r=ensureRow(l,idx);r.label=txt;l.title='';l.activeRow=idx;state.active=i;save();render();toast('この行に金額を入力できます')
-}
+function renderCalc(){const l=current(),r=selectedRow();document.getElementById('modeLabel').textContent=r?`List${state.active+1}・${l.activeRow+1}行目`:'電卓';document.getElementById('calcMemory').textContent=l.memory?('M '+fmt(l.memory)):'';document.getElementById('calcExpr').textContent=r?'行タップ入力中：数字を入れて別の行をタップすると合計に反映':'通常の電卓として使えます';document.getElementById('calcResult').textContent=r?(r.amount===''?'0':fmt(r.amount)):(l.display||'0')}
+function renderLists(){document.getElementById('lists').innerHTML=state.lists.map((l,i)=>{const count=Math.max(MIN_ROWS,l.rows.length);let rows='';for(let idx=0;idx<count;idx++){const r=l.rows[idx]||{label:'',memo:'',amount:''};const empty=rowEmpty(r);rows+=`<div class="row ${state.active===i&&l.activeRow===idx?'selected':''} ${empty?'empty':''}" data-row="${idx}" data-list="${i}"><div><div class="label">${r.label?esc(r.label):''}</div><div class="sub">${r.memo?esc(r.memo):''}</div></div><div class="amount">${fmt(r.amount)}</div></div>`;}return `<article class="list-card ${state.active===i?'active':''}" data-card="${i}"><div class="list-head"><div class="list-title">List${i+1}</div><div class="total">${fmt(totalFor(l))}</div></div><div class="entry-bar"><input id="input-${i}" data-input="${i}" value="${esc(l.title)}" placeholder="型番・メモを入力" autocomplete="off" autocapitalize="characters" spellcheck="false"><button type="button" data-addtext="${i}">追加</button></div><div class="rows">${rows}</div><div class="list-footer"><button type="button" class="ac" data-clear="${i}">AC</button></div></article>`}).join('')}
+function render(){applyTheme();renderTabs();renderSettings();renderLists();renderCalc();bind()}
+function bind(){document.querySelectorAll('[data-tab]').forEach(x=>x.onclick=()=>{state.active=+x.dataset.tab;save();render()});document.querySelectorAll('[data-card]').forEach(x=>x.onclick=e=>{if(e.target.closest('input,button,.row'))return;state.active=+x.dataset.card;save();render()});document.querySelectorAll('[data-row]').forEach(x=>x.onclick=()=>selectRow(+x.dataset.list,+x.dataset.row));document.querySelectorAll('[data-input]').forEach(x=>{x.onfocus=()=>{state.active=+x.dataset.input;save();renderTabs();renderCalc()};x.oninput=e=>{state.lists[+x.dataset.input].title=e.target.value;save()};x.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();addText(+x.dataset.input)}}});document.querySelectorAll('[data-addtext]').forEach(x=>x.onclick=()=>addText(+x.dataset.addtext));document.querySelectorAll('[data-clear]').forEach(x=>x.onclick=()=>clearList(+x.dataset.clear));document.querySelectorAll('[data-theme]').forEach(x=>x.onclick=()=>{state.theme=x.dataset.theme;save();render();toast('テーマを変更しました')})}
+function selectRow(i,idx){state.active=i;const l=state.lists[i];ensureRow(l,idx);l.activeRow=idx;save();render()}
+function addText(i){const l=state.lists[i],txt=l.title.trim();if(!txt)return;snapshot(i);let idx=l.rows.findIndex(r=>rowEmpty(r));if(idx<0)idx=l.rows.length;const r=ensureRow(l,idx);r.label=txt;l.title='';l.activeRow=idx;state.active=i;save();render();toast('型番を追加しました')}
 function clearList(i){if(!confirm('List'+(i+1)+'をすべて消去しますか？'))return;state.lists[i]=fresh();save();render()}
-function rowDigit(k){
- const l=current(),r=selectedRow();if(!r)return false;
- if(!/^\d+$/.test(k)&&k!=='.'&&k!=='C'&&k!=='±')return false;
- snapshot(state.active);
- let s=String(r.amount??'');
- if(k==='C')s='';
- else if(k==='±'){if(s)s=s.startsWith('-')?s.slice(1):'-'+s}
- else if(k==='.'){if(!s.includes('.'))s+=(s===''?'0.':'.')}
- else {s+=(s==='0'?'':k)}
- r.amount=s;
- save();render();
- return true
-}
-function press(k){
- beep();
- if(rowDigit(k))return;
- const i=state.active,l=current();
- if(k==='undo'){restore(i);return}
- if(k==='C'){snapshot(i);l.expr='';l.display='0';save();renderCalc();return}
- if(k==='±'){snapshot(i);if(l.expr){l.expr=l.expr.startsWith('-')?l.expr.slice(1):'-'+l.expr;l.display=l.expr}else l.display=String(-(Number(l.display)||0));save();renderCalc();return}
- if(k==='='){
-   if(!l.expr){toast('計算式を入力してください');return}
-   try{const r=safeEval(l.expr);snapshot(i);l.display=String(r);l.expr='';save();renderCalc()}
-   catch(e){toast('計算式を確認してください')}
-   return
- }
- const op=['+','−','×','÷'].includes(k);
- snapshot(i);
- if(op){
-   if(!l.expr&&k==='−')l.expr='−';
-   else if(!l.expr)l.expr=(Number(l.display)||0)+k;
-   else if(/[+−×÷]$/.test(l.expr))l.expr=l.expr.slice(0,-1)+k;
-   else l.expr+=k
- }else if(k==='.'){
-   const seg=(l.expr.split(/[+−×÷]/).pop()||'');if(!seg.includes('.'))l.expr+=(seg===''?'0.':'.')
- }else l.expr+=k;
- try{l.display=l.expr&&!/[+−×÷.]$/.test(l.expr)?String(safeEval(l.expr)):l.expr||'0'}catch(e){l.display=l.expr||'0'}
- save();renderCalc()
-}
-function memAction(a){const l=current(),r=selectedRow();const n=r?Number(r.amount)||0:Number(l.display)||0;if(a==='mc')l.memory=0;if(a==='mplus')l.memory+=n;if(a==='mminus')l.memory-=n;save();renderCalc();toast(a==='mc'?'メモリーをクリア':'メモリー '+money(l.memory))}
-
-document.getElementById('keypad').onclick=e=>{const b=e.target.closest('[data-key]');if(b)press(b.dataset.key)};
-document.querySelector('.memory').onclick=e=>{const b=e.target.closest('[data-action]');if(b)memAction(b.dataset.action)};
-document.getElementById('gear').onclick=()=>document.getElementById('settings').classList.toggle('open');
-document.getElementById('soundSwitch').onclick=()=>{state.sound=!state.sound;save();renderSettings();beep()};
-document.addEventListener('pointerdown',e=>{const s=document.getElementById('settings');if(s.classList.contains('open')&&!s.contains(e.target)&&!document.getElementById('gear').contains(e.target))s.classList.remove('open')});
-document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;const m={'Enter':'=','=':'=','Escape':'C','/':'÷','*':'×','-':'−','+':'+','.':'.'};const k=/^[0-9]$/.test(e.key)?e.key:m[e.key];if(k){e.preventDefault();press(k)}});
-load();render();
-if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+function rowDigit(k){const r=selectedRow();if(!r)return false;if(!(/^\d+$/.test(k)||k==='.'||k==='C'||k==='±'))return false;snapshot(state.active);let s=String(r.amount??'');if(k==='C')s='';else if(k==='±'){if(s)s=s.startsWith('-')?s.slice(1):'-'+s}else if(k==='.'){if(!s.includes('.'))s+=(s===''?'0.':'.')}else{s+=(s==='0'?'':k)}r.amount=s;save();render();return true}
+function press(k){beep();if(rowDigit(k))return;const l=current();if(k==='undo'){restore(state.active);return}if(k==='C'){snapshot(state.active);l.expr='';l.display='0';save();renderCalc();return}if(k==='±'){snapshot(state.active);if(l.expr){l.expr=l.expr.startsWith('-')?l.expr.slice(1):'-'+l.expr;l.display=l.expr}else l.display=String(-(Number(l.display)||0));save();renderCalc();return}if(k==='='){if(!l.expr){toast('計算式を入力してください');return}try{const r=safeEval(l.expr);snapshot(state.active);l.display=String(r);l.expr='';save();renderCalc()}catch(e){toast('計算式を確認してください')}return}const op=['+','−','×','÷'].includes(k);snapshot(state.active);if(op){if(!l.expr&&k==='−')l.expr='−';else if(!l.expr)l.expr=(Number(l.display)||0)+k;else if(/[+−×÷]$/.test(l.expr))l.expr=l.expr.slice(0,-1)+k;else l.expr+=k}else if(k==='.'){const seg=(l.expr.split(/[+−×÷]/).pop()||'');if(!seg.includes('.'))l.expr+=(seg===''?'0.':'.')}else l.expr+=k;try{l.display=l.expr&&!/[+−×÷.]$/.test(l.expr)?String(safeEval(l.expr)):l.expr||'0'}catch(e){l.display=l.expr||'0'}save();renderCalc()}
+function memAction(a){const l=current(),r=selectedRow();const n=r?Number(r.amount)||0:Number(l.display)||0;if(a==='mc')l.memory=0;if(a==='mplus')l.memory+=n;if(a==='mminus')l.memory-=n;save();renderCalc();toast(a==='mc'?'メモリーをクリア':'メモリー '+fmt(l.memory))}
+document.getElementById('keypad').onclick=e=>{const b=e.target.closest('[data-key]');if(b)press(b.dataset.key)};document.querySelector('.memory').onclick=e=>{const b=e.target.closest('[data-action]');if(b)memAction(b.dataset.action)};document.getElementById('gear').onclick=()=>document.getElementById('settings').classList.toggle('open');document.getElementById('soundSwitch').onclick=()=>{state.sound=!state.sound;save();renderSettings();beep()};document.addEventListener('pointerdown',e=>{const s=document.getElementById('settings');if(s.classList.contains('open')&&!s.contains(e.target)&&!document.getElementById('gear').contains(e.target))s.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;const m={'Enter':'=','=':'=','Escape':'C','/':'÷','*':'×','-':'−','+':'+','.':'.'};const k=/^[0-9]$/.test(e.key)?e.key:m[e.key];if(k){e.preventDefault();press(k)}});
+load();render();if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script>
-</body>
-</html>
+</body></html>
