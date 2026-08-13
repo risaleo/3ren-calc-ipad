@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="nojima 3連電卓">
 <meta name="theme-color" content="#ee4b92">
-<link rel="manifest" href="manifest.webmanifest?v=2.8.0">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=2.8.0">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=2.8.0">
+<link rel="manifest" href="manifest.webmanifest?v=3.0.1">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3.0.1">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=3.0.1">
 <title>nojima 3連電卓</title>
 <style>
 :root{--bg1:#d92a72;--bg2:#f46eaa;--bg3:#f9bbd5;--accent:#ee3d89;--accentDark:#a91455;--text:#3a2430;--muted:#906b7c;--line:#efd0dd;--shadow:0 5px 14px rgba(87,12,50,.18)}
@@ -45,8 +45,8 @@ button,input{font:inherit} button{touch-action:manipulation;cursor:pointer}
 <body>
 <div class="app">
   <header class="topbar">
-    <div class="version">Ver.2.8.0</div>
-    <div class="brand"><div class="brand-name">nojima</div><img class="mascot" src="mascot.png?v=2.8.0" alt="コンサルくん"></div>
+    <div class="version">Ver.3.0.1</div>
+    <div class="brand"><div class="brand-name">nojima</div><img class="mascot" src="mascot.png?v=3.0.1" alt="コンサルくん"></div>
     <button class="gear" id="gear" aria-label="設定">⚙</button>
   </header>
   <main class="workspace">
@@ -62,7 +62,7 @@ button,input{font:inherit} button{touch-action:manipulation;cursor:pointer}
         <button class="key" data-key="0">0</button><button class="key" data-key="00">00</button><button class="key" data-key=".">.</button><button class="key pink" data-key="+">＋</button>
         <button class="key op" data-key="C">C</button><button class="key op" data-key="back">⌫</button><button class="key op small" data-key="±">+/−</button><button class="key eq" data-key="=">＝</button>
       </div>
-      <div class="settings" id="settings"><h3>設定</h3><div class="setting-section"><div class="setting-label">テーマカラー</div><div class="swatches" id="swatches"></div></div><div class="setting-section"><div class="switchrow"><span>サウンド</span><button class="switch" id="soundSwitch"></button></div></div><div class="setting-section"><div class="switchrow"><span>シンプル操作</span><strong>ON</strong></div><div class="switchrow"><span>バージョン</span><strong>2.8.0</strong></div></div></div>
+      <div class="settings" id="settings"><h3>設定</h3><div class="setting-section"><div class="setting-label">テーマカラー</div><div class="swatches" id="swatches"></div></div><div class="setting-section"><div class="switchrow"><span>サウンド</span><button class="switch" id="soundSwitch"></button></div></div><div class="setting-section"><div class="switchrow"><span>シンプル操作</span><strong>ON</strong></div><div class="switchrow"><span>バージョン</span><strong>3.0.1</strong></div></div></div>
     </aside>
   </main>
 </div>
@@ -129,7 +129,7 @@ load();render();
 if('serviceWorker' in navigator){
   window.addEventListener('load', async ()=>{
     try{
-      const reg=await navigator.serviceWorker.register('./sw.js?v=2.8.0',{updateViaCache:'none'});
+      const reg=await navigator.serviceWorker.register('./sw.js?v=3.0.1',{updateViaCache:'none'});
       await reg.update();
       if(reg.waiting){reg.waiting.postMessage({type:'SKIP_WAITING'});}
       navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!sessionStorage.getItem('v280reloaded')){sessionStorage.setItem('v280reloaded','1');location.reload();}});
