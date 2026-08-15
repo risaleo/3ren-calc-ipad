@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="nojima 3連電卓">
 <meta name="theme-color" content="#ee4b92">
-<link rel="manifest" href="manifest.webmanifest?v=3.1.0">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3.1.0">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=3.1.0">
+<link rel="manifest" href="manifest.webmanifest?v=3.1.1">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3.1.1">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=3.1.1">
 <title>nojima 3連電卓</title>
 <style>
 :root{--bg1:#d92a72;--bg2:#f46eaa;--bg3:#f9bbd5;--accent:#ee3d89;--accentDark:#a91455;--text:#3a2430;--muted:#906b7c;--line:#efd0dd;--shadow:0 5px 14px rgba(87,12,50,.18)}
@@ -45,8 +45,8 @@ button,input{font:inherit} button{touch-action:manipulation;cursor:pointer}
 <body>
 <div class="app">
   <header class="topbar">
-    <div class="version">Ver.3.1.0</div>
-    <div class="brand"><div class="brand-name">nojima</div><img class="mascot" src="mascot.png?v=3.1.0" alt="コンサルくん"></div>
+    <div class="version">Ver.3.1.1</div>
+    <div class="brand"><div class="brand-name">nojima</div><img class="mascot" src="mascot.png?v=3.1.1" alt="コンサルくん"></div>
     <button class="gear" id="gear" aria-label="設定">⚙</button>
   </header>
   <main class="workspace">
@@ -62,7 +62,7 @@ button,input{font:inherit} button{touch-action:manipulation;cursor:pointer}
         <button class="key" data-key="0">0</button><button class="key" data-key="00">00</button><button class="key" data-key=".">.</button><button class="key pink" data-key="+">＋</button>
         <button class="key op" data-key="C">C</button><button class="key op" data-key="back">⌫</button><button class="key op small" data-key="±">+/−</button><button class="key eq" data-key="=">＝</button>
       </div>
-      <div class="settings" id="settings"><h3>設定</h3><div class="setting-section"><div class="setting-label">テーマカラー</div><div class="swatches" id="swatches"></div></div><div class="setting-section"><div class="switchrow"><span>サウンド</span><button class="switch" id="soundSwitch"></button></div></div><div class="setting-section"><div class="switchrow"><span>シンプル操作</span><strong>ON</strong></div><div class="switchrow"><span>バージョン</span><strong>3.1.0</strong></div></div></div>
+      <div class="settings" id="settings"><h3>設定</h3><div class="setting-section"><div class="setting-label">テーマカラー</div><div class="swatches" id="swatches"></div></div><div class="setting-section"><div class="switchrow"><span>サウンド</span><button class="switch" id="soundSwitch"></button></div></div><div class="setting-section"><div class="switchrow"><span>シンプル操作</span><strong>ON</strong></div><div class="switchrow"><span>バージョン</span><strong>3.1.1</strong></div></div></div>
     </aside>
   </main>
 </div>
@@ -71,8 +71,8 @@ button,input{font:inherit} button{touch-action:manipulation;cursor:pointer}
 const THEMES={pink:{label:'Pink',vars:{'--bg1':'#d92a72','--bg2':'#f46eaa','--bg3':'#f9bbd5','--accent':'#ee3d89','--accentDark':'#a91455'}},blue:{label:'Blue',vars:{'--bg1':'#1264c5','--bg2':'#4b9cf0','--bg3':'#c9e6ff','--accent':'#2b86df','--accentDark':'#0d4d9c'}},green:{label:'Green',vars:{'--bg1':'#2c8f45','--bg2':'#68ba72','--bg3':'#d5f0d7','--accent':'#3ca457','--accentDark':'#236d34'}},purple:{label:'Purple',vars:{'--bg1':'#6b42ad','--bg2':'#a375db','--bg3':'#e8d8fb','--accent':'#8b5cc5','--accentDark':'#5a348f'}}};
 const MIN_ROWS=14;const fresh=()=>({title:'',memory:0,rows:[],undo:[],redo:[],activeRow:null});
 let state={active:2,theme:'pink',sound:false,lists:[fresh(),fresh(),fresh()]};
-function load(){try{const keys=['nojima3calc-v3.1','nojima3calc-v3.0','nojima3calc-v2.9','nojima3calc-v2.8','nojima3calc-v2.7','nojima3calc-v2.6','nojima3calc-v2.5','nojima3calc-v2.4','nojima3calc-v2.3','nojima3calc-v2.2','nojima3calc-v2.1'];for(const k of keys){const d=JSON.parse(localStorage.getItem(k));if(d&&Array.isArray(d.lists)&&d.lists.length===3){state={...state,...d,lists:d.lists.map(l=>({...fresh(),...l,activeRow:Number.isInteger(l.activeRow)?l.activeRow:null,rows:(l.rows||[]).map(r=>({label:r.label||'',token:r.token||r.amount||''}))}))};break}}}catch(e){}}
-function save(){localStorage.setItem('nojima3calc-v3.1',JSON.stringify(state))}
+function load(){try{const keys=['nojima3calc-v3.1.1','nojima3calc-v3.1','nojima3calc-v3.0','nojima3calc-v2.9','nojima3calc-v2.8','nojima3calc-v2.7','nojima3calc-v2.6','nojima3calc-v2.5','nojima3calc-v2.4','nojima3calc-v2.3','nojima3calc-v2.2','nojima3calc-v2.1'];for(const k of keys){const d=JSON.parse(localStorage.getItem(k));if(d&&Array.isArray(d.lists)&&d.lists.length===3){state={...state,...d,lists:d.lists.map(l=>({...fresh(),...l,activeRow:Number.isInteger(l.activeRow)?l.activeRow:null,rows:(l.rows||[]).map(r=>({label:r.label||'',token:r.token||r.amount||''}))}))};break}}}catch(e){}}
+function save(){localStorage.setItem('nojima3calc-v3.1.1',JSON.stringify(state))}
 function esc(s){return String(s??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
 function fmt(v){const n=Number(v);return Number.isFinite(n)?n.toLocaleString('ja-JP',{maximumFractionDigits:10}):String(v||'')}
 function parseNum(s){const n=Number(String(s).replace(/,/g,''));return Number.isFinite(n)?n:null}
@@ -98,7 +98,7 @@ function attachRowEvents(el){const i=+el.dataset.list, idx=+el.dataset.row;let s
 function selectRow(i,idx){state.active=i;const l=state.lists[i];if(l.activeRow===idx){l.activeRow=null;save();render();return}ensureRow(l,idx);l.activeRow=idx;save();render()}
 function addText(i){const l=state.lists[i];const txt=String(l.title||'').trim();if(!txt)return;snapshot(i);let idx=Number.isInteger(l.activeRow)?l.activeRow:l.rows.findIndex(r=>rowEmpty(r));if(idx<0)idx=l.rows.length;const r=ensureRow(l,idx);r.label=txt;l.title='';l.activeRow=idx;state.active=i;save();render();setTimeout(()=>document.getElementById('text-'+i)?.focus(),0);toast('文字を追加しました')}
 function deleteRow(i,idx){const l=state.lists[i];if(idx>=l.rows.length || rowEmpty(l.rows[idx])) return;snapshot(i);l.rows.splice(idx,1);if(l.activeRow===idx) l.activeRow=null;else if(Number.isInteger(l.activeRow)&&l.activeRow>idx) l.activeRow--;save();render();toast('行を削除しました')}
-function clearList(i){if(!confirm('List'+(i+1)+'をすべて消去しますか？'))return;state.lists[i]=fresh();save();render()}
+function clearList(i){state.lists[i]=fresh();save();render();toast('List'+(i+1)+'を消去しました')}
 function setToken(row,token){row.token=token}
 function appendDigit(row,k){let t=String(row.token||'');if(!t){t=k==='.'?'0.':k}else{const info=tokenInfo(t);if(info.type==='op'){let n=info.rawNum||'';if(k==='.'&&!n.includes('.')) n+=(n===''?'0.':'.'); else if(k!=='.') n+=(n==='0'?'':k); t=info.op+n;}else{if(k==='.'&&!t.includes('.')) t+='.'; else if(k!=='.') t+=(t==='0'?'':k);}}
 row.token=t}
@@ -129,7 +129,7 @@ load();render();
 if('serviceWorker' in navigator){
   window.addEventListener('load', async ()=>{
     try{
-      const reg=await navigator.serviceWorker.register('./sw.js?v=3.1.0',{updateViaCache:'none'});
+      const reg=await navigator.serviceWorker.register('./sw.js?v=3.1.1',{updateViaCache:'none'});
       await reg.update();
       if(reg.waiting){reg.waiting.postMessage({type:'SKIP_WAITING'});}
       navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!sessionStorage.getItem('v280reloaded')){sessionStorage.setItem('v280reloaded','1');location.reload();}});
