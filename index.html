@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="nojima 3連電卓">
 <meta name="theme-color" content="#ee4b92">
-<link rel="manifest" href="manifest.webmanifest?v=3.1.4">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3.1.4">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=3.1.4">
+<link rel="manifest" href="manifest.webmanifest?v=3.2.0">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3.2.0">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=3.2.0">
 <title>nojima 3連電卓</title>
 <style>
 :root{--bg1:#d92a72;--bg2:#f46eaa;--bg3:#f9bbd5;--accent:#ee3d89;--accentDark:#a91455;--text:#3a2430;--muted:#906b7c;--line:#efd0dd;--shadow:0 5px 14px rgba(87,12,50,.18)}
@@ -23,10 +23,9 @@ button,input{font:inherit} button{touch-action:manipulation;cursor:pointer}
 .list-card{min-width:0;min-height:0;display:grid;grid-template-rows:54px 64px minmax(0,1fr) 48px;background:linear-gradient(#fff8fb,#fff);border:2px solid rgba(255,255,255,.55);border-radius:18px;box-shadow:inset 0 0 0 2px rgba(213,35,109,.16),var(--shadow);overflow:hidden}.list-card.active{box-shadow:inset 0 0 0 3px #fff,0 0 0 3px var(--accentDark),var(--shadow)}
 .list-head{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0 12px;background:linear-gradient(#ffd3e5,#f69ec2);border-bottom:1px solid #e986ad}.list-title{font-size:21px;font-weight:850;color:#961446}.total{font-size:24px;font-weight:850;color:#111;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-.entry-bar{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:7px;padding:7px 8px;background:#ffd8e7;border-bottom:1px solid var(--line);align-items:stretch}
-.entry-bar input{min-width:0;width:100%;height:48px;touch-action:auto!important;-webkit-user-select:text!important;user-select:text!important;-webkit-appearance:none;appearance:none;border:2px solid #eda7c4;border-radius:11px;background:#fff;padding:8px 12px;font-size:19px;font-weight:650;line-height:1.2;outline:none;color:#2f2230;letter-spacing:.2px}
+.entry-bar{display:block;padding:7px 8px;background:#ffd8e7;border-bottom:1px solid var(--line)}
 .entry-bar input:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(238,61,137,.14)}
-.entry-bar button{height:48px;border:0;border-radius:11px;background:linear-gradient(#f8619f,#dd2c77);color:#fff;font-size:16px;font-weight:850}
+.entry-bar button{width:100%;height:48px;border:0;border-radius:11px;background:linear-gradient(#fff,#ffe9f3);color:#8d1e50;font-size:18px;font-weight:800;text-align:left;padding:0 14px;box-shadow:inset 0 0 0 2px #eda7c4}
 
 .rows{min-height:0;overflow:auto;background:rgba(255,255,255,.84);overscroll-behavior:contain}
 .row{height:64px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:8px 12px;position:relative;transition:transform .12s ease, background .12s ease}
@@ -42,6 +41,18 @@ button,input{font:inherit} button{touch-action:manipulation;cursor:pointer}
 .standalone-tip{display:none;position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:80;background:#2f2730;color:#fff;border:0;border-radius:999px;padding:10px 16px;font-size:14px;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.25)}
 body.standalone .standalone-tip.show{display:block}
 
+
+.entry-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(35,18,29,.48);z-index:100}
+.entry-modal.open{display:flex}
+.entry-panel{width:min(640px,94vw);background:#fff;border-radius:22px;padding:20px;box-shadow:0 22px 60px rgba(0,0,0,.32);border:3px solid var(--accent)}
+.entry-panel h2{margin:0 0 14px;font-size:24px;color:#8e1648}
+.entry-panel input{display:block;width:100%;height:64px;border:3px solid #eda7c4;border-radius:14px;padding:10px 14px;font-size:25px;font-weight:750;color:#222;background:#fff;outline:none;-webkit-user-select:text!important;user-select:text!important;touch-action:auto!important;-webkit-appearance:none}
+.entry-panel input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(238,61,137,.15)}
+.entry-actions{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;margin-top:14px}
+.entry-actions button{height:54px;border:0;border-radius:13px;font-size:19px;font-weight:850}
+.entry-cancel{background:#ececf1;color:#3d3a43}
+.entry-ok{background:linear-gradient(#ff70aa,#e63680);color:#fff}
+
 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);background:#2f2730;color:#fff;border-radius:999px;padding:9px 15px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:60}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media (max-width:1100px){html,body{overflow:auto}.app{height:auto;min-height:100svh}.workspace{grid-template-columns:1fr}.control{order:2;min-height:520px}.lists{order:1;grid-template-columns:1fr}.list-card{min-height:500px}.topbar{position:sticky;top:0;z-index:40;background:linear-gradient(90deg,var(--bg2),var(--bg1));border-radius:0 0 15px 15px}}
 </style>
@@ -49,8 +60,8 @@ body.standalone .standalone-tip.show{display:block}
 <body>
 <div class="app">
   <header class="topbar">
-    <div class="version">Ver.3.1.4</div>
-    <div class="brand"><div class="brand-name">nojima</div><img class="mascot" src="mascot.png?v=3.1.4" alt="コンサルくん"></div>
+    <div class="version">Ver.3.2.0</div>
+    <div class="brand"><div class="brand-name">nojima</div><img class="mascot" src="mascot.png?v=3.2.0" alt="コンサルくん"></div>
     <button class="gear" id="gear" aria-label="設定">⚙</button>
   </header>
   <main class="workspace">
@@ -66,17 +77,27 @@ body.standalone .standalone-tip.show{display:block}
         <button class="key" data-key="0">0</button><button class="key" data-key="00">00</button><button class="key" data-key=".">.</button><button class="key pink" data-key="+">＋</button>
         <button class="key op" data-key="C">C</button><button class="key op" data-key="back">⌫</button><button class="key op small" data-key="±">+/−</button><button class="key eq" data-key="=">＝</button>
       </div>
-      <div class="settings" id="settings"><h3>設定</h3><div class="setting-section"><div class="setting-label">テーマカラー</div><div class="swatches" id="swatches"></div></div><div class="setting-section"><div class="switchrow"><span>サウンド</span><button class="switch" id="soundSwitch"></button></div></div><div class="setting-section"><div class="switchrow"><span>シンプル操作</span><strong>ON</strong></div><div class="switchrow"><span>バージョン</span><strong>3.1.4</strong></div></div></div>
+      <div class="settings" id="settings"><h3>設定</h3><div class="setting-section"><div class="setting-label">テーマカラー</div><div class="swatches" id="swatches"></div></div><div class="setting-section"><div class="switchrow"><span>サウンド</span><button class="switch" id="soundSwitch"></button></div></div><div class="setting-section"><div class="switchrow"><span>シンプル操作</span><strong>ON</strong></div><div class="switchrow"><span>バージョン</span><strong>3.2.0</strong></div></div></div>
     </aside>
   </main>
 </div>
-<button class="standalone-tip" id="standaloneTip" type="button">入力欄を開く</button><div class="toast" id="toast"></div>
+<div class="entry-modal" id="entryModal" aria-hidden="true">
+  <div class="entry-panel" role="dialog" aria-modal="true" aria-labelledby="entryTitle">
+    <h2 id="entryTitle">型番・商品名・メモ入力</h2>
+    <input id="entryModalInput" type="text" inputmode="text" enterkeyhint="done" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="例：AN226AFNS">
+    <div class="entry-actions">
+      <button type="button" class="entry-cancel" id="entryCancel">キャンセル</button>
+      <button type="button" class="entry-ok" id="entryOk">この行に入れる</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
 <script>
 const THEMES={pink:{label:'Pink',vars:{'--bg1':'#d92a72','--bg2':'#f46eaa','--bg3':'#f9bbd5','--accent':'#ee3d89','--accentDark':'#a91455'}},blue:{label:'Blue',vars:{'--bg1':'#1264c5','--bg2':'#4b9cf0','--bg3':'#c9e6ff','--accent':'#2b86df','--accentDark':'#0d4d9c'}},green:{label:'Green',vars:{'--bg1':'#2c8f45','--bg2':'#68ba72','--bg3':'#d5f0d7','--accent':'#3ca457','--accentDark':'#236d34'}},purple:{label:'Purple',vars:{'--bg1':'#6b42ad','--bg2':'#a375db','--bg3':'#e8d8fb','--accent':'#8b5cc5','--accentDark':'#5a348f'}}};
 const MIN_ROWS=14;const fresh=()=>({title:'',memory:0,rows:[],undo:[],redo:[],activeRow:null});
 let state={active:2,theme:'pink',sound:false,lists:[fresh(),fresh(),fresh()]};
-function load(){try{const keys=['nojima3calc-v3.1.4','nojima3calc-v3.1.3','nojima3calc-v3.1.2','nojima3calc-v3.1.1','nojima3calc-v3.1','nojima3calc-v3.0','nojima3calc-v2.9','nojima3calc-v2.8','nojima3calc-v2.7','nojima3calc-v2.6','nojima3calc-v2.5','nojima3calc-v2.4','nojima3calc-v2.3','nojima3calc-v2.2','nojima3calc-v2.1'];for(const k of keys){const d=JSON.parse(localStorage.getItem(k));if(d&&Array.isArray(d.lists)&&d.lists.length===3){state={...state,...d,lists:d.lists.map(l=>({...fresh(),...l,activeRow:Number.isInteger(l.activeRow)?l.activeRow:null,rows:(l.rows||[]).map(r=>({label:r.label||'',token:r.token||r.amount||''}))}))};break}}}catch(e){}}
-function save(){localStorage.setItem('nojima3calc-v3.1.4',JSON.stringify(state))}
+function load(){try{const keys=['nojima3calc-v3.2','nojima3calc-v3.1.4','nojima3calc-v3.1.3','nojima3calc-v3.1.2','nojima3calc-v3.1.1','nojima3calc-v3.1','nojima3calc-v3.0','nojima3calc-v2.9','nojima3calc-v2.8','nojima3calc-v2.7','nojima3calc-v2.6','nojima3calc-v2.5','nojima3calc-v2.4','nojima3calc-v2.3','nojima3calc-v2.2','nojima3calc-v2.1'];for(const k of keys){const d=JSON.parse(localStorage.getItem(k));if(d&&Array.isArray(d.lists)&&d.lists.length===3){state={...state,...d,lists:d.lists.map(l=>({...fresh(),...l,activeRow:Number.isInteger(l.activeRow)?l.activeRow:null,rows:(l.rows||[]).map(r=>({label:r.label||'',token:r.token||r.amount||''}))}))};break}}}catch(e){}}
+function save(){localStorage.setItem('nojima3calc-v3.2',JSON.stringify(state))}
 function esc(s){return String(s??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
 function fmt(v){const n=Number(v);return Number.isFinite(n)?n.toLocaleString('ja-JP',{maximumFractionDigits:10}):String(v||'')}
 function parseNum(s){const n=Number(String(s).replace(/,/g,''));return Number.isFinite(n)?n:null}
@@ -95,9 +116,9 @@ function applyTheme(){const t=THEMES[state.theme]||THEMES.pink;Object.entries(t.
 function renderTabs(){document.getElementById('tabs').innerHTML=[0,1,2].map(i=>`<button type="button" class="tab ${state.active===i?'active':''}" data-tab="${i}">List${i+1}</button>`).join('')}
 function renderSettings(){const colors={pink:'#ee3d89',blue:'#2b86df',green:'#3ca457',purple:'#8b5cc5'};document.getElementById('swatches').innerHTML=Object.keys(THEMES).map(k=>`<button type="button" class="swatch ${state.theme===k?'selected':''}" data-theme="${k}"><i style="background:${colors[k]}" ></i><span>${THEMES[k].label}</span></button>`).join('');document.getElementById('soundSwitch').classList.toggle('on',state.sound)}
 function renderStatus(){const l=current(),r=currentRow();document.getElementById('statusText').textContent=r?`List${state.active+1} ${l.activeRow+1}行目`:'行を選んで入力';document.getElementById('statusValue').textContent=fmt(totalFor(l))}
-function renderLists(){document.getElementById('lists').innerHTML=state.lists.map((l,i)=>{const count=Math.max(MIN_ROWS,l.rows.length);let rows='';for(let idx=0;idx<count;idx++){const r=l.rows[idx]||{label:'',token:''};const empty=rowEmpty(r);rows+=`<div class="row ${state.active===i&&l.activeRow===idx?'selected':''} ${empty?'empty':''}" data-row="${idx}" data-list="${i}"><div class="label">${r.label?esc(r.label):''}</div><div class="token">${esc(r.token)}</div></div>`;}return `<article class="list-card ${state.active===i?'active':''}" data-card="${i}"><div class="list-head"><div class="list-title">List${i+1}</div><div class="total">${fmt(totalFor(l))}</div></div><form class="entry-bar" data-entryform="${i}" autocomplete="off"><input id="text-${i}" name="modeltext" data-text="${i}" type="text" inputmode="text" enterkeyhint="done" placeholder="型番・商品名・メモを入力" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false"><button type="submit">追加</button></form><div class="rows">${rows}</div><div class="list-footer"><button type="button" class="ac" data-clear="${i}">AC</button></div></article>`}).join('')}
+function renderLists(){document.getElementById('lists').innerHTML=state.lists.map((l,i)=>{const count=Math.max(MIN_ROWS,l.rows.length);let rows='';for(let idx=0;idx<count;idx++){const r=l.rows[idx]||{label:'',token:''};const empty=rowEmpty(r);rows+=`<div class="row ${state.active===i&&l.activeRow===idx?'selected':''} ${empty?'empty':''}" data-row="${idx}" data-list="${i}"><div class="label">${r.label?esc(r.label):''}</div><div class="token">${esc(r.token)}</div></div>`;}return `<article class="list-card ${state.active===i?'active':''}" data-card="${i}"><div class="list-head"><div class="list-title">List${i+1}</div><div class="total">${fmt(totalFor(l))}</div></div><div class="entry-bar"><button type="button" class="open-text-entry" data-openentry="${i}">型番・商品名・メモを入力</button></div><div class="rows">${rows}</div><div class="list-footer"><button type="button" class="ac" data-clear="${i}">AC</button></div></article>`}).join('')}
 function render(){applyTheme();renderTabs();renderSettings();renderLists();renderStatus();bind()}
-function bind(){document.querySelectorAll('[data-tab]').forEach(x=>x.onclick=()=>{state.active=+x.dataset.tab;save();render()});document.querySelectorAll('[data-card]').forEach(x=>x.onclick=e=>{if(e.target.closest('button,input,.row'))return;state.active=+x.dataset.card;save();render()});document.querySelectorAll('[data-row]').forEach(x=>attachRowEvents(x));document.querySelectorAll('[data-text]').forEach(x=>{const i=+x.dataset.text;x.addEventListener('click',e=>{e.stopPropagation();state.active=i;try{x.focus({preventScroll:true})}catch(_){x.focus()}renderTabs();renderStatus()});x.addEventListener('touchend',e=>{e.stopPropagation();state.active=i;try{x.focus({preventScroll:true})}catch(_){x.focus()}},{passive:true});x.onfocus=()=>{state.active=i;renderTabs();renderStatus()}});document.querySelectorAll('[data-entryform]').forEach(f=>{f.addEventListener('click',e=>e.stopPropagation());f.onsubmit=e=>{e.preventDefault();const i=+f.dataset.entryform;const input=f.querySelector('input[name="modeltext"]');addText(i,input?input.value:'')}});document.querySelectorAll('[data-clear]').forEach(x=>x.onclick=()=>clearList(+x.dataset.clear));document.querySelectorAll('[data-theme]').forEach(x=>x.onclick=()=>{state.theme=x.dataset.theme;save();render();toast('テーマを変更しました')})}
+function bind(){document.querySelectorAll('[data-tab]').forEach(x=>x.onclick=()=>{state.active=+x.dataset.tab;save();render()});document.querySelectorAll('[data-card]').forEach(x=>x.onclick=e=>{if(e.target.closest('button,input,.row'))return;state.active=+x.dataset.card;save();render()});document.querySelectorAll('[data-row]').forEach(x=>attachRowEvents(x));document.querySelectorAll('[data-openentry]').forEach(b=>b.onclick=e=>{e.stopPropagation();openEntry(+b.dataset.openentry)});document.querySelectorAll('[data-clear]').forEach(x=>x.onclick=()=>clearList(+x.dataset.clear));document.querySelectorAll('[data-theme]').forEach(x=>x.onclick=()=>{state.theme=x.dataset.theme;save();render();toast('テーマを変更しました')})}
 function attachRowEvents(el){const i=+el.dataset.list, idx=+el.dataset.row;let sx=0,sy=0,moved=false;el.onclick=()=>selectRow(i,idx);el.addEventListener('touchstart',e=>{const t=e.changedTouches[0];sx=t.clientX;sy=t.clientY;moved=false;el.classList.remove('swiping')},{passive:true});el.addEventListener('touchmove',e=>{const t=e.changedTouches[0];const dx=t.clientX-sx, dy=t.clientY-sy;if(Math.abs(dx)>Math.abs(dy) && dx< -18){moved=true;el.classList.add('swiping');el.style.transform=`translateX(${Math.max(dx,-70)}px)`;}},{passive:true});el.addEventListener('touchend',e=>{const t=e.changedTouches[0];const dx=t.clientX-sx;el.style.transform='';el.classList.remove('swiping');if(moved && dx<-55){deleteRow(i,idx);return;} if(Math.abs(dx)<10)selectRow(i,idx);},{passive:true})}
 function selectRow(i,idx){state.active=i;const l=state.lists[i];if(l.activeRow===idx){l.activeRow=null;save();render();return}ensureRow(l,idx);l.activeRow=idx;save();render()}
 function addText(i,value){const l=state.lists[i];const txt=String(value||'').trim();if(!txt){toast('型番を入力してください');return;}snapshot(i);let idx=Number.isInteger(l.activeRow)?l.activeRow:l.rows.findIndex(r=>rowEmpty(r));if(idx<0)idx=l.rows.length;const r=ensureRow(l,idx);r.label=txt;l.activeRow=idx;state.active=i;save();render();toast('「'+txt+'」を追加しました')}
@@ -133,7 +154,7 @@ load();render();
 if('serviceWorker' in navigator){
   window.addEventListener('load', async ()=>{
     try{
-      const reg=await navigator.serviceWorker.register('./sw.js?v=3.1.4',{updateViaCache:'none'});
+      const reg=await navigator.serviceWorker.register('./sw.js?v=3.2.0',{updateViaCache:'none'});
       await reg.update();
       if(reg.waiting){reg.waiting.postMessage({type:'SKIP_WAITING'});}
       navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!sessionStorage.getItem('v280reloaded')){sessionStorage.setItem('v280reloaded','1');location.reload();}});
